@@ -3,6 +3,11 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/esteb/projet-android-m1/Appli-android-M1/app/src/main/res/layout/activity_main.xml" value="0.25" />
+        <entry key="..\:/Users/esteb/projet-android-m1/Appli-android-M1/app/src/main/res/layout/calendrier.xml" value="0.25" />
+        <entry key="..\:/Users/esteb/projet-android-m1/Appli-android-M1/app/src/main/res/layout/fragment_barre_des_taches.xml" value="0.1" />
+        <entry key="..\:/Users/esteb/projet-android-m1/Appli-android-M1/app/src/main/res/layout/fragment_barre_des_taches1.xml" value="0.18541666666666667" />
+        <entry key="..\:/Users/esteb/projet-android-m1/Appli-android-M1/app/src/main/res/menu/barre_des_taches.xml" value="0.3625" />
         <entry key="..\:/Users/esteb/projet-android-m1/app/src/main/res/layout/activity_main.xml" value="0.3484375" />
       </map>
     </option>
