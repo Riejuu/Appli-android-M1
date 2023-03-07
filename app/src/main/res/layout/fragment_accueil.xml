@@ -13,4 +13,13 @@
         android:layout_height="match_parent"
         android:text="@string/hello_blank_fragment" />
 
+    <!--graphique pie chart -->
+    <org.eazegraph.lib.charts.PieChart
+        android:id="@+id/pieGraph"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+
+        />
+
+
 </FrameLayout>

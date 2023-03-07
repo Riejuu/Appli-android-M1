@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
         bottomNavigationView.setSelectedItemId(middleItemId);
 
 
-        //attribue les
+        //attribue les pages aux boutons de la barre des taches
         binding.barreDesTaches.setOnItemSelectedListener(item -> {
 
             switch (item.getItemId()) {
