@@ -1,24 +1,18 @@
 package com.example.taskmanagement;
 
-import android.content.ContentResolver;
-import android.content.ContentValues;
-import android.content.Intent;
-import android.net.Uri;
+import android.app.Activity;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import android.provider.CalendarContract;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CalendarView;
-import android.widget.Toast;
-
-import java.util.Calendar;
-import java.util.TimeZone;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -74,39 +68,18 @@ public class CalendrierFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        CalendarView calendarView = (CalendarView) getActivity().findViewById(R.id.calendarView);
 
-        calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
-            @Override
-            public void onSelectedDayChange(CalendarView view, int year, int month, int dayOfMonth) {
-                // Faites quelque chose lorsque l'utilisateur sélectionne une nouvelle date dans le calendrier
-                System.out.println("hey salut");
-            }
-        });
+        CalendarView calendarView = getActivity().findViewById(R.id.calendarView);
 
+        FonctionsDatabase fdb = new FonctionsDatabase();
+        fdb.addEvenement(getActivity(), "bonjour", "menage", 2003, 5, 5, 5, 5);
+        fdb.deleteEvenement(getActivity(), 5);
+        fdb.showAllEvenement(getActivity());
 
-        // Récupération du ContentResolver
-        ContentResolver cr = getActivity().getContentResolver();
+        fdb.addTypes(getActivity(), "menage");
+        fdb.deleteTypes(getActivity(), "menage");
+        fdb.showAllTypes(getActivity());
 
-        // Création d'un nouvel événement
-        ContentValues values = new ContentValues();
-        int date = 5;
-        values.put(CalendarContract.Events.DTSTART, date);
-        values.put(CalendarContract.Events.DTEND, date);
-        values.put(CalendarContract.Events.TITLE, "Mon nouvel événement");
-        values.put(CalendarContract.Events.DESCRIPTION, "Description de l'événement");
-        values.put(CalendarContract.Events.CALENDAR_ID, 1);
-        values.put(CalendarContract.Events.EVENT_TIMEZONE, TimeZone.getDefault().getID());
-
-        // Ajout de l'événement au calendrier
-        Uri uri = cr.insert(CalendarContract.Events.CONTENT_URI, values);
-
-        // Affichage de la confirmation
-        //Toast.makeText(getActivity(), "Evénement ajouté au calendrier", Toast.LENGTH_SHORT).show();
-
-        Intent intent = new Intent(Intent.ACTION_VIEW);
-        intent.setData(uri);
-        startActivity(intent);
 
 
 
@@ -121,3 +94,5 @@ public class CalendrierFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_calendrier, container, false);
     }
 }
+
+

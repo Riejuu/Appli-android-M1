@@ -44,4 +44,7 @@ dependencies {
     implementation 'com.google.android.material:material:1.8.0' //implementation pour ajouter BottomNavigationView
     implementation 'com.github.blackfizz:eazegraph:1.2.5l@aar' //implementation pour ajouter des graphiques
     implementation 'com.nineoldandroids:library:2.4.0' //implementation pour ajouter des graphiques
+
+    implementation 'androidx.sqlite:sqlite:2.2.0'   //base de données
+
 }
