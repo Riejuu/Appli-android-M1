@@ -9,10 +9,15 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CalendarView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -70,15 +75,37 @@ public class CalendrierFragment extends Fragment {
 
 
         CalendarView calendarView = getActivity().findViewById(R.id.calendarView);
-
         FonctionsDatabase fdb = new FonctionsDatabase();
-        fdb.addEvenement(getActivity(), "bonjour", "menage", 2003, 5, 5, 5, 5);
-        fdb.deleteEvenement(getActivity(), 5);
+
+
+        fdb.addEvenement(getActivity(), "bonjour", "menage", 2023, 3, 3, 5, 5);
+        //fdb.deleteEvenement(getActivity(), 5);
         fdb.showAllEvenement(getActivity());
 
+        /*
         fdb.addTypes(getActivity(), "menage");
         fdb.deleteTypes(getActivity(), "menage");
         fdb.showAllTypes(getActivity());
+        */
+
+
+        //quand on selectionne une case du calendrier recupère ou on est et
+        calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+
+            @Override
+            public void onSelectedDayChange(CalendarView view, int year, int month, int dayOfMonth) {
+
+
+
+                //les mois commencent a 0
+                for(Evenement eve : fdb.showDaysEvent(getActivity(), year, month+1, dayOfMonth))
+                    afficherEvenementCalendrier(eve);
+
+
+            }
+        });
+
+
 
 
 
@@ -93,6 +120,27 @@ public class CalendrierFragment extends Fragment {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_calendrier, container, false);
     }
+
+
+
+
+
+
+    //ecrit l'evenement sous le calendrier dans un TextView selon les resultats données par la fonction showDaysEvent qui renvoie tous
+    //les evenements du jour
+
+    public void afficherEvenementCalendrier(Evenement eve){
+
+        TextView textView = new TextView(getContext());
+        textView.setText(eve.nom);
+        textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 24);
+        textView.setPadding(16, 16, 16, 16);
+        LinearLayout linearLayout = getView().findViewById(R.id.editTextLayout);
+        linearLayout.addView(textView);
+
+
+        }
+
 }
 
 

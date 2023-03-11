@@ -6,6 +6,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.provider.BaseColumns;
 
+import java.util.ArrayList;
+
 
 //cette classe sert a interroger la base de donnée
 public class FonctionsDatabase {
@@ -50,6 +52,7 @@ public class FonctionsDatabase {
         long newRowId = db.insert("evenement", null, values);
     }
 
+    //utile surtout pour le dev mais pas utilisé dans l appli
     public void showAllEvenement(Activity a){
 
 
@@ -93,12 +96,69 @@ public class FonctionsDatabase {
         db.close();
     }
 
+    //récupère tous les evenements de la journée, et renvoie en ArrayList
+    public ArrayList<Evenement> showDaysEvent(Activity a, int _annee, int _mois, int _jour){
+
+        EvenementDatabase dbHelper = new EvenementDatabase(a);
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+
+        String[] projection = {
+                EvenementEntry.COLUMN_ID,
+                EvenementEntry.COLUMN_NOM,
+                EvenementEntry.COLUMN_TYPE,
+                EvenementEntry.COLUMN_ANNEE,
+                EvenementEntry.COLUMN_MOIS,
+                EvenementEntry.COLUMN_JOUR,
+                EvenementEntry.COLUMN_HEURE,
+                EvenementEntry.COLUMN_MINUTE
+        };
+
+        String selection = EvenementEntry.COLUMN_ANNEE + " = ? AND " +
+                EvenementEntry.COLUMN_MOIS + " = ? AND " +
+                EvenementEntry.COLUMN_JOUR + " = ?";
+        String[] arguments = {String.valueOf(_annee), String.valueOf(_mois),String.valueOf(_jour)};
+
+        Cursor cursor = db.query(
+                EvenementEntry.TABLE_NAME,
+                projection,
+                selection,
+                arguments,
+                null,
+                null,
+                null
+        );
+
+        ArrayList<Evenement> listeEvenements = new ArrayList<>();
+
+        Evenement osef = new Evenement();
+
+        while (cursor.moveToNext()) {
+            osef.nom = cursor.getString(cursor.getColumnIndexOrThrow(EvenementEntry.COLUMN_NOM));
+            listeEvenements.add(osef);
+        }
+        cursor.close();
+        db.close();
+        return listeEvenements;
+    }
+
+
+    //récupère un evenement en particulier
+
+
+
+
+    //efface un evenement selon son id
     public void deleteEvenement(Activity a, int id) {
         EvenementDatabase dbHelper = new EvenementDatabase(a);
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         db.delete("evenement", "id = ?", new String[] { String.valueOf(id) });
         db.close();
     }
+
+
+
+
+
 
 
     // TABLE TYPES
