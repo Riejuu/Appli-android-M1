@@ -19,6 +19,7 @@ import android.text.Spanned;
 import android.text.TextUtils;
 import android.text.style.ImageSpan;
 import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -106,10 +107,17 @@ public class CalendrierFragment extends Fragment {
             public void onSelectedDayChange(CalendarView view, int year, int month, int dayOfMonth) {
 
 
+                LinearLayout linearLayout = getView().findViewById(R.id.editTextLinearLayoutCalendrier);
+                linearLayout.removeAllViews();
+
                 //les mois commencent a 0
                 for(Evenement eve : fdb.showDaysEvent(getActivity(), year, month+1, dayOfMonth))
                     afficherEvenementCalendrier(eve);
+
+
+
             }
+
         });
 
 
@@ -138,17 +146,19 @@ public class CalendrierFragment extends Fragment {
     */
     public void afficherEvenementCalendrier(Evenement eve){
 
+
+
         // cree un textView
         TextView textView = new TextView(getContext());
         textView.setText(eve.type + " : " + eve.nom);
 
 
 
-        // je fais un rectangle arrondis
+        // je fais un rectangle arrondis pour le layout de gauche
         float radius = getResources().getDisplayMetrics().density * 16;
         GradientDrawable shape = new GradientDrawable();
         shape.setShape(GradientDrawable.RECTANGLE);
-        shape.setCornerRadii(new float[] { radius, radius, radius, radius, radius, radius, radius, radius });   //arrondi de 16dp dans chaque coin
+        shape.setCornerRadii(new float[] { radius, radius, 0,0,0,0, radius, radius });   //arrondi de 16dp dans chaque coin
         shape.setStroke(1, Color.BLACK);    //bordure de 1 pixel
 
         //adapter a la couleur du type
@@ -173,26 +183,42 @@ public class CalendrierFragment extends Fragment {
 
 
 
-        //rajout de l image validé, non validé
-/*
-        ImageView imageView = getActivity().findViewById(R.id.tache_pas_faite);
-        imageView.setImageResource(img);
-*/
 
 
 
 
-
-
-
-
+        LinearLayout layout = new LinearLayout(getContext());
+        layout.setOrientation(LinearLayout.HORIZONTAL);
 
         //j'espace les textView
         LinearLayout.LayoutParams espacement = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         espacement.setMargins(0, 0, 0, (int) getResources().getDisplayMetrics().density * 25);
-        textView.setLayoutParams(espacement);
+        layout.setLayoutParams(espacement);
 
-        linearLayout.addView(textView);
+        //rajout de l image
+        ImageView imageView = new ImageView(getContext());
+        imageView.setImageResource( (eve.valide)? R.drawable.tache_faite : R.drawable.tache_pas_faite );
+
+        shape.setCornerRadii(new float[] { 0, 0, radius, radius, radius, radius, 0, 0 });
+        imageView.setBackground(shape);
+        imageView.setLayoutParams(espacement);
+
+        //le texte prendra 90% de l'espace de gauche et l image prend 10 % a droite
+        LinearLayout.LayoutParams textParams1 = new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 0.9f);
+        LinearLayout.LayoutParams textParams2 = new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 0.1f);
+        textParams1.gravity = Gravity.CENTER_VERTICAL;
+        textParams2.gravity = Gravity.CENTER_VERTICAL;
+
+        textView.setLayoutParams(textParams1);
+        imageView.setLayoutParams(textParams2);
+
+        layout.addView(textView);
+        layout.addView(imageView);
+
+
+
+        linearLayout.addView(layout);
+
     }
 
 }
