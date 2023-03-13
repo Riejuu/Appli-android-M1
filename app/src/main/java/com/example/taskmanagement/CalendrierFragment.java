@@ -148,7 +148,9 @@ public class CalendrierFragment extends Fragment {
 
 
 
-        // cree un textView
+        //BLOC DE GAUCHE
+
+        // cree un textView pour mettre le type de tache et le nom
         TextView textView = new TextView(getContext());
         textView.setText(eve.type + " : " + eve.nom);
 
@@ -168,15 +170,15 @@ public class CalendrierFragment extends Fragment {
         textView.setBackground(shape);
         textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 24);
 
-        //j augmente la taille du cadre aussi en dp
+
+        //j'augmente la taille du cadre aussi en dp
         int paddingHautBas = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 20, getResources().getDisplayMetrics());//espace haut et bas
         int paddingDroite = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 40, getResources().getDisplayMetrics());//espace droite
         textView.setPadding(textView.getPaddingLeft()+10, paddingHautBas, paddingDroite, paddingHautBas);
         LinearLayout linearLayout = getView().findViewById(R.id.editTextLinearLayoutCalendrier);
 
 
-        //une ligne max, sinon on ecrit ...
-
+        //une ligne max, sinon on ecrit ... à la fin
         textView.setEllipsize(TextUtils.TruncateAt.END);
         textView.setSingleLine(true);
         textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20); // Définir la taille du texte en dp
@@ -186,6 +188,39 @@ public class CalendrierFragment extends Fragment {
 
 
 
+        //BLOC DE DROITE
+
+        //rajout de l image
+        ImageView imageView = new ImageView(getContext());
+        imageView.setImageResource( (eve.valide)? R.drawable.tache_faite : R.drawable.tache_pas_faite );
+
+
+        // je fais un rectangle arrondis pour le layout de droite
+        float radiusDroite = getResources().getDisplayMetrics().density * 16;
+        GradientDrawable shapeDroite = new GradientDrawable();
+        shapeDroite.setShape(GradientDrawable.RECTANGLE);
+        shapeDroite.setCornerRadii(new float[] { 0, 0, radius, radius, radius, radius, 0, 0 });   //arrondi de 16dp dans chaque coin
+        shapeDroite.setStroke(1, Color.BLACK);    //bordure de 1 pixel
+
+        //adapter a la couleur du type
+        shapeDroite.setColor(Color.GREEN);    //TODO CHANGER CETTE LIGNE PAR LA COULEUR DU TYPE QUAND CELA SERA FAIT
+
+
+        //le texte prendra 90% de l'espace de gauche et l image prend 10 % a droite
+        LinearLayout.LayoutParams textParams1 = new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT, 0.9f);
+        LinearLayout.LayoutParams textParams2 = new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT, 0.1f);
+        textParams1.gravity = Gravity.CENTER_VERTICAL;
+        textParams2.gravity = Gravity.CENTER_VERTICAL;
+
+        textView.setLayoutParams(textParams1);
+        imageView.setLayoutParams(textParams2);
+
+
+        shapeDroite.setCornerRadii(new float[] { 0, 0, radius, radius, radius, radius, 0, 0 });
+        imageView.setBackground(shapeDroite);
+
+
+        //je fais un layout horizontal pour mettre le bloc de gauche (texte) et le bloc de droite (image) sur une meme ligne
 
         LinearLayout layout = new LinearLayout(getContext());
         layout.setOrientation(LinearLayout.HORIZONTAL);
@@ -195,28 +230,11 @@ public class CalendrierFragment extends Fragment {
         espacement.setMargins(0, 0, 0, (int) getResources().getDisplayMetrics().density * 25);
         layout.setLayoutParams(espacement);
 
-        //rajout de l image
-        ImageView imageView = new ImageView(getContext());
-        imageView.setImageResource( (eve.valide)? R.drawable.tache_faite : R.drawable.tache_pas_faite );
-
-        shape.setCornerRadii(new float[] { 0, 0, radius, radius, radius, radius, 0, 0 });
-        imageView.setBackground(shape);
-        imageView.setLayoutParams(espacement);
-
-        //le texte prendra 90% de l'espace de gauche et l image prend 10 % a droite
-        LinearLayout.LayoutParams textParams1 = new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 0.9f);
-        LinearLayout.LayoutParams textParams2 = new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 0.1f);
-        textParams1.gravity = Gravity.CENTER_VERTICAL;
-        textParams2.gravity = Gravity.CENTER_VERTICAL;
-
-        textView.setLayoutParams(textParams1);
-        imageView.setLayoutParams(textParams2);
-
+        //rajout des blocs au layout horizontal
         layout.addView(textView);
         layout.addView(imageView);
 
-
-
+        //rajout du layout horizontale au layout vertical
         linearLayout.addView(layout);
 
     }
