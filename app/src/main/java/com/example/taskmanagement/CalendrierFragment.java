@@ -177,6 +177,7 @@ public class CalendrierFragment extends Fragment {
 /*
         ImageView imageView = getActivity().findViewById(R.id.tache_pas_faite);
         imageView.setImageResource(img);
+        Salut c'est la modif
 */
 
 
