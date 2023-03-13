@@ -17,11 +17,13 @@ public class EvenementDatabase extends SQLiteOpenHelper {
             + "mois INTEGER, "
             + "jour INTEGER, "
             + "heure INTEGER, "
-            + "minute INTEGER)";
+            + "minute INTEGER,"
+            + "valide INTEGER DEFAULT 0)";
 
     String createTypes = "CREATE TABLE types ("
             + "id INTEGER PRIMARY KEY AUTOINCREMENT, "      //table pour stocker les types de taches, j'aurais pu lier une dépendance entre les tables pour rajouter de la securité cependant j'ai préféré me concentrer sur la partie android plutot que base de donnée
-            + "type TEXT)";
+            + "type TEXT,"
+            + " couleur TEXT)";
 
 
     public EvenementDatabase(Context context) {
