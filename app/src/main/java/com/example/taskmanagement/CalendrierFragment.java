@@ -42,6 +42,9 @@ public class CalendrierFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
+
+    FonctionsDatabase fdb = new FonctionsDatabase();
+
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
@@ -86,7 +89,7 @@ public class CalendrierFragment extends Fragment {
 
 
         CalendarView calendarView = getActivity().findViewById(R.id.calendarView);
-        FonctionsDatabase fdb = new FonctionsDatabase();
+
 
 
         fdb.addEvenement(getActivity(), "bonjourhbnbhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh", "menage", 2023, 3, 3, 5, 5, 0);
@@ -193,6 +196,18 @@ public class CalendrierFragment extends Fragment {
         //rajout de l image
         ImageView imageView = new ImageView(getContext());
         imageView.setImageResource( (eve.valide)? R.drawable.tache_faite : R.drawable.tache_pas_faite );
+        imageView.setId(eve.id);
+
+        //rend l'image cliquable
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                fdb.alterValideEvenement(getActivity(), eve.id,(eve.valide)?  0:1);                             //modifie la valeur de valide dans la db
+                eve.valide = (eve.valide)? false :  true;                                                       //modifie la valeur de valide de l'evenement
+                imageView.setImageResource( (eve.valide)? R.drawable.tache_pas_faite : R.drawable.tache_faite );//modifie l'image a chaque clique
+            }
+        });
 
 
         // je fais un rectangle arrondis pour le layout de droite

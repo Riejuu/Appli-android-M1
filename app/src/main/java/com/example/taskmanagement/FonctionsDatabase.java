@@ -158,8 +158,18 @@ public class FonctionsDatabase {
     }
 
 
-    //récupère un evenement en particulier
+    //modifie valide d'un evenement
 
+    public void alterValideEvenement(Activity a, int id, int nouvelleValeur){
+
+        EvenementDatabase dbHelper = new EvenementDatabase(a);
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("valide", nouvelleValeur);
+        db.update("evenement", values, "id = ?", new String[] { String.valueOf(id) });
+        db.close();
+
+    }
 
 
 
