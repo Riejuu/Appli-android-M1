@@ -41,6 +41,9 @@ public class FonctionsDatabase {
 
     public void addEvenement(Activity a, String _nom, String _type, int _annee, int _mois, int _jour, int _heure, int _minute, int _valide) {
 
+        if(!typeExists(a,_type))
+            addTypes(a, _type, "#AAAAAA");      //dans le cas ou on invoque la fonction pour un type qui n existe pas (ce n'est pas censé arriver si tout ce passe bien)
+
         EvenementDatabase dbHelper = new EvenementDatabase(a);
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -157,9 +160,7 @@ public class FonctionsDatabase {
         return listeEvenements;
     }
 
-
     //modifie valide d'un evenement
-
     public void alterValideEvenement(Activity a, int id, int nouvelleValeur){
 
         EvenementDatabase dbHelper = new EvenementDatabase(a);
@@ -170,6 +171,7 @@ public class FonctionsDatabase {
         db.close();
 
     }
+
 
 
 
@@ -200,13 +202,14 @@ public class FonctionsDatabase {
         return exists;
     }
 
-    public void addTypes(Activity a, String _type) {
+    public void addTypes(Activity a, String _type, String _couleur) {
         //verifie que le type n'existe pas deja
-        if(typeExists(a,_type)){
+        if(!typeExists(a,_type)){
         EvenementDatabase dbHelper = new EvenementDatabase(a);
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put("type", _type);
+        values.put("couleur", _couleur);
         long newRowId = db.insert("types", null, values);
         }
     }
@@ -236,12 +239,54 @@ public class FonctionsDatabase {
         while (cursor.moveToNext()) {
             int id = cursor.getInt(cursor.getColumnIndexOrThrow(TypesEntry.COLUMN_ID));
             String type = cursor.getString(cursor.getColumnIndexOrThrow(TypesEntry.COLUMN_TYPE));
-            System.out.println("id : "+id +" type: "+ type);
+            String couleur = cursor.getString(cursor.getColumnIndexOrThrow(TypesEntry.COLUMN_COULEUR));
+            System.out.println("id : "+id +" type : "+ type +" couleur : " + couleur);
         }
 
         cursor.close();
         db.close();
     }
+
+    //recupere toutes les entrées de la base de données Type
+    public ArrayList<Types> getAllTypes(Activity a){
+
+        EvenementDatabase dbHelper = new EvenementDatabase(a);
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+
+        String[] projection = {
+                TypesEntry.COLUMN_ID,
+                TypesEntry.COLUMN_TYPE,
+                TypesEntry.COLUMN_COULEUR
+        };
+
+        Cursor cursor = db.query(
+                TypesEntry.TABLE_NAME,
+                projection,
+                null,
+                null,
+                null,
+                null,
+                null
+        );
+
+        ArrayList<Types> listeTypes = new ArrayList<>();
+
+        while (cursor.moveToNext()) {
+             Types osef = new Types(
+                    cursor.getInt(cursor.getColumnIndexOrThrow(TypesEntry.COLUMN_ID)),
+                    cursor.getString(cursor.getColumnIndexOrThrow(TypesEntry.COLUMN_TYPE)),
+                    cursor.getString(cursor.getColumnIndexOrThrow(TypesEntry.COLUMN_COULEUR)));
+
+            listeTypes.add(osef);
+        }
+
+
+        cursor.close();
+        db.close();
+        return listeTypes;
+    }
+
+
 
     public void deleteTypes(Activity a,String type) {
         EvenementDatabase dbHelper = new EvenementDatabase(a);

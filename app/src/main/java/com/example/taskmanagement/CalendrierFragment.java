@@ -204,8 +204,9 @@ public class CalendrierFragment extends Fragment {
             public void onClick(View v) {
 
                 fdb.alterValideEvenement(getActivity(), eve.id,(eve.valide)?  0:1);                             //modifie la valeur de valide dans la db
-                eve.valide = (eve.valide)? false :  true;                                                       //modifie la valeur de valide de l'evenement
                 imageView.setImageResource( (eve.valide)? R.drawable.tache_pas_faite : R.drawable.tache_faite );//modifie l'image a chaque clique
+                eve.valide = (eve.valide)? false :  true;                                                       //modifie la valeur de valide de l'evenement
+
             }
         });
 

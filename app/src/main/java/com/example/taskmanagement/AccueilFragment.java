@@ -1,5 +1,6 @@
 package com.example.taskmanagement;
 
+import android.app.Activity;
 import android.graphics.Color;
 import android.os.Bundle;
 
@@ -15,6 +16,8 @@ import android.widget.CalendarView;
 import org.eazegraph.lib.charts.PieChart;
 import org.eazegraph.lib.models.PieModel;
 
+import java.util.ArrayList;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link AccueilFragment#newInstance} factory method to
@@ -26,6 +29,8 @@ public class AccueilFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+
+    FonctionsDatabase fdb = new FonctionsDatabase();
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -75,23 +80,30 @@ public class AccueilFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-            View rootView =  inflater.inflate(R.layout.fragment_accueil, container, false);
+        View rootView =  inflater.inflate(R.layout.fragment_accueil, container, false);
 
-            //exemple de comment utiliser les graphiques
-
-            PieChart chart = rootView.findViewById(R.id.pieGraph);
-
-            int g1= 15;
-            int g2= 35;
-            int g3= 50;
-
-            chart.addPieSlice(new PieModel("Integer 1", g1, Color.parseColor("#FF00FF")));
-            chart.addPieSlice(new PieModel("a", g2, Color.parseColor("#FF0000")));
-            chart.addPieSlice(new PieModel("tous", g3, Color.parseColor("#0000FF")));
-
-            chart.startAnimation();
+        //exemple de comment utiliser les graphiques
 
 
-            return rootView;
+
+        if(fdb.getAllTypes(getActivity()).size() != 0 ) {
+
+
+            for(Types t : fdb.getAllTypes(getActivity())) {
+
+                PieChart chart = rootView.findViewById(R.id.pieGraph);
+
+                int g2 = 35;
+                int g3 = 50;
+
+                chart.addPieSlice(new PieModel("a", g2, Color.parseColor("#FF0000")));
+                chart.addPieSlice(new PieModel("tous", g3, Color.parseColor("#0000FF")));
+
+                chart.startAnimation();
+            }
+        }
+
+        return rootView;
+
     }
 }

@@ -24,7 +24,7 @@
         android:id="@+id/boutonAjouterEnBasADroite"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/tache_pas_faite"
+        android:src="@drawable/ajout"
         android:visibility="invisible"
         android:text="Bouton"
         app:layout_constraintBottom_toTopOf="@id/barreDesTaches"
