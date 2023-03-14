@@ -44,7 +44,7 @@ public class FonctionsDatabase {
         if(!typeExists(a,_type))
             addTypes(a, _type, "#AAAAAA");      //dans le cas ou on invoque la fonction pour un type qui n existe pas (ce n'est pas censé arriver si tout ce passe bien)
 
-        EvenementDatabase dbHelper = new EvenementDatabase(a);
+        Database dbHelper = new Database(a);
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put("nom", _nom);
@@ -62,7 +62,7 @@ public class FonctionsDatabase {
     public void showAllEvenement(Activity a){
 
 
-        EvenementDatabase dbHelper = new EvenementDatabase(a);
+        Database dbHelper = new Database(a);
         SQLiteDatabase db = dbHelper.getReadableDatabase();
 
         String[] projection = {
@@ -107,7 +107,7 @@ public class FonctionsDatabase {
     //récupère tous les evenements de la journée, et renvoie en ArrayList
     public ArrayList<Evenement> showDaysEvent(Activity a, int _annee, int _mois, int _jour){
 
-        EvenementDatabase dbHelper = new EvenementDatabase(a);
+        Database dbHelper = new Database(a);
         SQLiteDatabase db = dbHelper.getReadableDatabase();
 
         String[] projection = {
@@ -163,7 +163,7 @@ public class FonctionsDatabase {
     //modifie valide d'un evenement
     public void alterValideEvenement(Activity a, int id, int nouvelleValeur){
 
-        EvenementDatabase dbHelper = new EvenementDatabase(a);
+        Database dbHelper = new Database(a);
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put("valide", nouvelleValeur);
@@ -177,7 +177,7 @@ public class FonctionsDatabase {
 
     //efface un evenement selon son id
     public void deleteEvenement(Activity a, int id) {
-        EvenementDatabase dbHelper = new EvenementDatabase(a);
+        Database dbHelper = new Database(a);
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         db.delete("evenement", "id = ?", new String[] { String.valueOf(id) });
         db.close();
@@ -193,7 +193,7 @@ public class FonctionsDatabase {
 
 
     public boolean typeExists(Activity a, String type) {
-        EvenementDatabase dbHelper = new EvenementDatabase(a);
+        Database dbHelper = new Database(a);
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT * FROM types WHERE type=?", new String[] { type });
         boolean exists = (cursor.getCount() > 0);
@@ -205,7 +205,7 @@ public class FonctionsDatabase {
     public void addTypes(Activity a, String _type, String _couleur) {
         //verifie que le type n'existe pas deja
         if(!typeExists(a,_type)){
-        EvenementDatabase dbHelper = new EvenementDatabase(a);
+        Database dbHelper = new Database(a);
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put("type", _type);
@@ -217,7 +217,7 @@ public class FonctionsDatabase {
     public void showAllTypes(Activity a){
 
 
-        EvenementDatabase dbHelper = new EvenementDatabase(a);
+        Database dbHelper = new Database(a);
         SQLiteDatabase db = dbHelper.getReadableDatabase();
 
         String[] projection = {
@@ -250,7 +250,7 @@ public class FonctionsDatabase {
     //recupere toutes les entrées de la base de données Type
     public ArrayList<Types> getAllTypes(Activity a){
 
-        EvenementDatabase dbHelper = new EvenementDatabase(a);
+        Database dbHelper = new Database(a);
         SQLiteDatabase db = dbHelper.getReadableDatabase();
 
         String[] projection = {
@@ -289,7 +289,7 @@ public class FonctionsDatabase {
 
 
     public void deleteTypes(Activity a,String type) {
-        EvenementDatabase dbHelper = new EvenementDatabase(a);
+        Database dbHelper = new Database(a);
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         db.delete("evenement", "type = ?", new String[] { String.valueOf(type) });  //supprime le type de la table evenement
         db.delete("types", "type = ?", new String[] { String.valueOf(type) });      //supprime le type de la table type
