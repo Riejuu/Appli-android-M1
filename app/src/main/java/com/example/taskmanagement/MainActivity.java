@@ -48,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.barreTacheImage2:
                     // Code pour changer vers la page liste des types
                     imageView.setVisibility(View.VISIBLE);
+                    replaceFragment(new ListeTypesFragment());
                     return true;
                 case R.id.barreTacheImage3:
                     // Code pour changer vers la page d'accueil

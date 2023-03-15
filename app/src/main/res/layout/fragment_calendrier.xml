@@ -20,7 +20,7 @@
         android:layout_below="@id/calendarView">
 
         <LinearLayout
-            android:id="@+id/editTextLinearLayoutCalendrier"
+            android:id="@+id/linearLayoutCalendrier"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">

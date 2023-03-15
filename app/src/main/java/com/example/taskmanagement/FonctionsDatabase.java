@@ -160,6 +160,62 @@ public class FonctionsDatabase {
         return listeEvenements;
     }
 
+    //récupère tous les evenements du meme type
+    public ArrayList<Evenement> showTypeEvent(Activity a, String _type){
+
+        Database dbHelper = new Database(a);
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+
+        String[] projection = {
+                EvenementEntry.COLUMN_ID,
+                EvenementEntry.COLUMN_NOM,
+                EvenementEntry.COLUMN_TYPE,
+                EvenementEntry.COLUMN_ANNEE,
+                EvenementEntry.COLUMN_MOIS,
+                EvenementEntry.COLUMN_JOUR,
+                EvenementEntry.COLUMN_HEURE,
+                EvenementEntry.COLUMN_MINUTE,
+                EvenementEntry.COLUMN_VALIDE
+        };
+
+        String selection = EvenementEntry.COLUMN_TYPE + " = ?";
+        String[] arguments = {_type};
+
+        Cursor cursor = db.query(
+                EvenementEntry.TABLE_NAME,
+                projection,
+                selection,
+                arguments,
+                null,
+                null,
+                null
+        );
+
+        ArrayList<Evenement> listeEvenements = new ArrayList<>();
+
+
+        while (cursor.moveToNext()) {
+            // public Evenement(int _id, String _nom, String _type, int _annee, int _mois, int _jour, int _heure, int _minute, boolean _valide)
+            Evenement osef = new Evenement(
+                    cursor.getInt(cursor.getColumnIndexOrThrow(EvenementEntry.COLUMN_ID)),
+                    cursor.getString(cursor.getColumnIndexOrThrow(EvenementEntry.COLUMN_NOM)),
+                    cursor.getString(cursor.getColumnIndexOrThrow(EvenementEntry.COLUMN_TYPE)),
+                    cursor.getInt(cursor.getColumnIndexOrThrow(EvenementEntry.COLUMN_ANNEE)),
+                    cursor.getInt(cursor.getColumnIndexOrThrow(EvenementEntry.COLUMN_MOIS)),
+                    cursor.getInt(cursor.getColumnIndexOrThrow(EvenementEntry.COLUMN_JOUR)),
+                    cursor.getInt(cursor.getColumnIndexOrThrow(EvenementEntry.COLUMN_HEURE)),
+                    cursor.getInt(cursor.getColumnIndexOrThrow(EvenementEntry.COLUMN_MINUTE)),
+                    cursor.getInt(cursor.getColumnIndexOrThrow(EvenementEntry.COLUMN_VALIDE)) == 1? true : false);
+
+            listeEvenements.add(osef);
+        }
+        cursor.close();
+        db.close();
+        return listeEvenements;
+    }
+
+
+
     //modifie valide d'un evenement
     public void alterValideEvenement(Activity a, int id, int nouvelleValeur){
 

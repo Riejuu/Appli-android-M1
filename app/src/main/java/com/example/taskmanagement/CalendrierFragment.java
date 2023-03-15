@@ -92,9 +92,9 @@ public class CalendrierFragment extends Fragment {
 
 
 
-        fdb.addEvenement(getActivity(), "bonjourhbnbhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh", "menage", 2023, 3, 3, 5, 5, 0);
+        //fdb.addEvenement(getActivity(), "test", "Travail", 2023, 3, 3, 5, 5, 0);
         //fdb.deleteEvenement(getActivity(), 5);
-        fdb.showAllEvenement(getActivity());
+        //fdb.showAllEvenement(getActivity());
 
         /*
         fdb.addTypes(getActivity(), "menage");
@@ -110,7 +110,7 @@ public class CalendrierFragment extends Fragment {
             public void onSelectedDayChange(CalendarView view, int year, int month, int dayOfMonth) {
 
 
-                LinearLayout linearLayout = getView().findViewById(R.id.editTextLinearLayoutCalendrier);
+                LinearLayout linearLayout = getView().findViewById(R.id.linearLayoutCalendrier);
                 linearLayout.removeAllViews();
 
                 //les mois commencent a 0
@@ -178,7 +178,7 @@ public class CalendrierFragment extends Fragment {
         int paddingHautBas = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 20, getResources().getDisplayMetrics());//espace haut et bas
         int paddingDroite = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 40, getResources().getDisplayMetrics());//espace droite
         textView.setPadding(textView.getPaddingLeft()+10, paddingHautBas, paddingDroite, paddingHautBas);
-        LinearLayout linearLayout = getView().findViewById(R.id.editTextLinearLayoutCalendrier);
+        LinearLayout linearLayout = getView().findViewById(R.id.linearLayoutCalendrier);
 
 
         //une ligne max, sinon on ecrit ... à la fin
