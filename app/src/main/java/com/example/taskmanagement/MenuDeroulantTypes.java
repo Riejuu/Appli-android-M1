@@ -68,69 +68,46 @@ public class MenuDeroulantTypes extends BaseExpandableListAdapter {
 
     @Override
     public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
-
         String type = (String) getGroup(groupPosition);
         TextView typeItem;
         if (convertView == null) {
-
-            Context context = parent.getContext();
-            typeItem = new TextView(context);
-            typeItem.setLayoutParams(new ViewGroup.LayoutParams(
-                    ViewGroup.LayoutParams.MATCH_PARENT,
-                    ViewGroup.LayoutParams.WRAP_CONTENT));
-            typeItem.setPadding(0, 20, 0, 20);
-            typeItem.setTextSize(20);
-            convertView = typeItem;
-
-            //on fait un rectangle vert (code partiellement repris de CalendrierFragment
-            float radius = context.getResources().getDisplayMetrics().density * 16;
-            GradientDrawable shape = new GradientDrawable();
-            shape.setShape(GradientDrawable.RECTANGLE);
-            shape.setStroke(1, Color.BLACK);
-
-            shape.setColor(Color.GREEN);       //TODO CHANGER CETTE LIGNE PAR LA COULEUR DU TYPE QUAND CELA SERA FAIT
-            typeItem.setBackground(shape);
-            typeItem.setTextSize(TypedValue.COMPLEX_UNIT_SP, 24);
-        } else {
-            typeItem = (TextView) convertView;
+            // Utiliser LayoutInflater pour charger la vue de groupe à partir du fichier XML
+            LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            convertView = inflater.inflate(R.layout.liste_type_mere, null);
         }
 
         // Mettre à jour le texte du TextView
+        typeItem = (TextView) convertView.findViewById(R.id.typesItem);
         typeItem.setText(type);
 
+        //change la couleur pour l'adapter a celle de la db
+        GradientDrawable drawable = new GradientDrawable();
+        drawable.setShape(GradientDrawable.RECTANGLE);
+        drawable.setColor(Color.GREEN);                          //TODO CHANGER CETTE LIGNE PAR LA COULEUR DU TYPE QUAND CELA SERA FAIT
+
+        typeItem.setBackground(drawable);
         return convertView;
     }
+
 
     @Override
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
 
-        String childType = (String) getChild(groupPosition, childPosition);
-
-        // Créer une nouvelle vue de layout si convertView est nul
-        LinearLayout layout;
+        //si la vue n existe pas, on la crée
         if (convertView == null) {
-            Context context = parent.getContext();
-            layout = new LinearLayout(context);
-            layout.setOrientation(LinearLayout.HORIZONTAL);
-            layout.setPadding(100, 0, 0, 0);
-
-            TextView tiret = new TextView(context);
-            tiret.setText("-");
-            layout.addView(tiret);
-
-            TextView childTypeItem = new TextView(context);
-            childTypeItem.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
-            childTypeItem.setText(childType);
-            layout.addView(childTypeItem);
-
-            //Sinon il me les remets dans un ordre aleatoire
-        } else {
-            layout = (LinearLayout) convertView;
-            ((TextView) layout.getChildAt(1)).setText(childType);
+            convertView = LayoutInflater.from(context).inflate(R.layout.liste_type_fille, parent, false);
         }
 
-        return layout;
+
+        String childItem = (String) getChild(groupPosition, childPosition);
+
+        // On met à jour la vue avec les données de l'élément enfant
+        TextView childTextView = convertView.findViewById(R.id.itemFille);
+        childTextView.setText(childItem);
+
+        return convertView;
     }
+
 
     @Override
     public boolean isChildSelectable(int groupPosition, int childPosition) {
