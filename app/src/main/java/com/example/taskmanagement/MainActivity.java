@@ -73,9 +73,14 @@ public class MainActivity extends AppCompatActivity {
 
     private void replaceFragment(Fragment fragment){
         FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.frameMainActivity, fragment);
-        fragmentTransaction.commit();
+        Fragment existingFragment = fragmentManager.findFragmentById(R.id.frameMainActivity);
+
+        //rajout d une securité, car si on invoque deux fois les fragments, les elements inflaté n'existent plus
+        if (existingFragment == null || !existingFragment.getClass().getName().equals(fragment.getClass().getName())) {
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.replace(R.id.frameMainActivity, fragment);
+            fragmentTransaction.commit();
+        }
     }
 
 
