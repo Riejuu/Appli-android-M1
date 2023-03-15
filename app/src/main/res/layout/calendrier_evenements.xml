@@ -25,9 +25,10 @@
                 android:paddingLeft="16dp"
                 android:paddingTop="12dp"
                 android:paddingBottom="12dp"
-
                 android:background="@drawable/rectangle_arrondi_gauche"
-                android:text="Nom de l'événement" />
+                android:text="Nom de l'événement"
+                android:maxLines="4"
+                android:ellipsize="end"/>
 
         </LinearLayout>
 

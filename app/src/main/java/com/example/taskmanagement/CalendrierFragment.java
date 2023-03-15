@@ -156,7 +156,7 @@ public class CalendrierFragment extends Fragment {
         View view = LayoutInflater.from(getContext()).inflate(R.layout.calendrier_evenements, parentLayout, false);
 
         TextView tv = view.findViewById(R.id.evenementNom);
-        tv.setText("hey");
+        tv.setText(eve.nom);
 
         //je recupere l image et lui affecte un un on click effect mais aussi l image associé a si on a validé ou non
         ImageView iv = view.findViewById(R.id.evenementValide); //modifier cette ligne
