@@ -27,52 +27,18 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link ListeTypesFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+
 public class ListeTypesFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
     FonctionsDatabase fdb = new FonctionsDatabase();
 
     public ListeTypesFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment ListeTypes.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static ListeTypesFragment newInstance(String param1, String param2) {
-        ListeTypesFragment fragment = new ListeTypesFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
@@ -88,19 +54,10 @@ public class ListeTypesFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 
 
-        afficherTypes();
-
-
-    }
-
-
-    public void afficherTypes(){
-
 
         //on va créer un expandable list view, c est un dire un menu qui quand on clique dessus affiche autre chose
         //ici un menu de type et quand on clique sur le type, ca affiche les taches associées
 
-        //pour cela on doit lister les parents et les enfant
 
 
 
@@ -111,6 +68,7 @@ public class ListeTypesFragment extends Fragment {
         Map<String, List<String>> dictionnaire = new HashMap<>();
 
 
+        //pour cela on doit lister les parents et les enfant
         for (Types t : fdb.getAllTypes(getActivity())) {
             List<String> tachesListe = new ArrayList<>();
             typeListe.add(t.type);
@@ -121,15 +79,12 @@ public class ListeTypesFragment extends Fragment {
             dictionnaire.put(t.type,tachesListe);
         }
 
-        System.out.println(dictionnaire);
-
+        //dans la classe MenuDeroulantType, il va s'occuper d'afficher les view parents et enfants
         MenuDeroulantTypes adapter = new MenuDeroulantTypes(getActivity(), typeListe, dictionnaire);
         expListView.setAdapter(adapter);
 
+
+
     }
-
-
-
-
 
 }
