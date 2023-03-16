@@ -28,7 +28,8 @@
                 android:background="@drawable/rectangle_arrondi_gauche"
                 android:text="Nom de l'événement"
                 android:maxLines="4"
-                android:ellipsize="end"/>
+                android:ellipsize="end"
+                android:textAlignment="center"/>
 
         </LinearLayout>
 

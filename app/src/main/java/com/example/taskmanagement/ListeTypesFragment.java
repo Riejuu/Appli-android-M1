@@ -151,47 +151,36 @@ public class ListeTypesFragment extends Fragment {
 
         Button bEnregistrer = popupView.findViewById(R.id.boutonPopupEnregistrement);
 
-        bEnregistrer.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                EditText type = popupView.findViewById(R.id.nouveauType);
+        bEnregistrer.setOnClickListener(osef -> {
+            EditText type = popupView.findViewById(R.id.nouveauType);
 
 
-                //si les deux champs sont remplis (4 vu qu on a 4 barres en soit)
-                if(!TextUtils.isEmpty(type.getText().toString().trim()) && !(barreRouge.getProgress() == 0 && barreVerte.getProgress() == 0 && barreBleu.getProgress() == 0) ){
+            //si les deux champs sont remplis (4 vu qu on a 4 barres en soit)
+            if(!TextUtils.isEmpty(type.getText().toString().trim()) && !(barreRouge.getProgress() == 0 && barreVerte.getProgress() == 0 && barreBleu.getProgress() == 0) ){
 
-                   //ajoute le type et la couleur en hexa (si existe deja, va faire comme si c etait rajouté du point de vu popup mais ne fera rien dans la db)
-                    fdb.addTypes(getActivity(),type.getText().toString(), String.format("#%06X", (0xFFFFFF & ((ColorDrawable) couleurTextView.getBackground()).getColor())));
-                    popup.dismiss();
-                }else {
-                    //si l edit text est vide, on coloris en rouge pour lui dire
-                    if (TextUtils.isEmpty(type.getText().toString().trim())) {
-                        System.out.println("type null");
-                        TextView tvType = popupView.findViewById(R.id.nouveauTypeTV);
-                        tvType.setTextColor(Color.RED);
-                    }
-                    //si les barre sont tous a 0 on colorie en rouge pour lui dire
-                    if (barreRouge.getProgress() == 0 && barreVerte.getProgress() == 0 && barreBleu.getProgress() == 0) {
-                        System.out.println("hexa null");
-                        TextView tvCouleur = popupView.findViewById(R.id.couleurTV);
-                        tvCouleur.setTextColor(Color.RED);
-                    }
+               //ajoute le type et la couleur en hexa (si existe deja, va faire comme si c etait rajouté du point de vu popup mais ne fera rien dans la db)
+                fdb.addTypes(getActivity(),type.getText().toString(), String.format("#%06X", (0xFFFFFF & ((ColorDrawable) couleurTextView.getBackground()).getColor())));
+                popup.dismiss();
+            }else {
+                //si l edit text est vide, on coloris en rouge pour lui dire
+                if (TextUtils.isEmpty(type.getText().toString().trim())) {
+                    System.out.println("type null");
+                    TextView tvType = popupView.findViewById(R.id.nouveauTypeTV);
+                    tvType.setTextColor(Color.RED);
                 }
-
+                //si les barre sont tous a 0 on colorie en rouge pour lui dire
+                if (barreRouge.getProgress() == 0 && barreVerte.getProgress() == 0 && barreBleu.getProgress() == 0) {
+                    System.out.println("hexa null");
+                    TextView tvCouleur = popupView.findViewById(R.id.couleurTV);
+                    tvCouleur.setTextColor(Color.RED);
+                }
             }
+
         });
 
         Button bFermer = popupView.findViewById(R.id.boutonPopupFermer);
 
-        bFermer.setOnClickListener(new View.OnClickListener(){
-
-            @Override
-            public void onClick(View v) {
-            popup.dismiss();
-
-            }
-
-        });
+        bFermer.setOnClickListener(osef-> popup.dismiss());
 
 
 

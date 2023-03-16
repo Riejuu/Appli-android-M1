@@ -1,18 +1,13 @@
 package com.example.taskmanagement;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.app.Activity;
 import android.os.Bundle;
-import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.PopupWindow;
 
 import com.example.taskmanagement.databinding.ActivityMainBinding;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -78,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
 
 
                     // Code pour changer vers la page calendrier
-                    imageView.setVisibility(View.VISIBLE);
+                    imageView.setVisibility(View.INVISIBLE);
                     replaceFragment(new CalendrierFragment());
                     return true;
 
@@ -86,8 +81,9 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.barreTacheImage5:
 
 
-                    // Code pour changer vers la page liste des tâches
+                    // Code pour changer vers la page liste des evenements
                     imageView.setVisibility(View.VISIBLE);
+                    replaceFragment(new FragmentListeEvenements());
                     return true;
                 default:
                     return false;
