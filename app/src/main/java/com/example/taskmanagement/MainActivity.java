@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.PopupWindow;
 
 import com.example.taskmanagement.databinding.ActivityMainBinding;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -19,6 +20,9 @@ public class MainActivity extends AppCompatActivity {
 
     //sert pour la barre de navigation
     ActivityMainBinding binding;
+
+    //donne une variable globale popup pour permettre de facilement gerer la suppression de la popup dans la navigation a travers les views
+    static PopupWindow popup = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,26 +45,49 @@ public class MainActivity extends AppCompatActivity {
 
             switch (item.getItemId()) {
                 case R.id.barreTacheImage1:
+
+                    fermerPopup();
+
                     // Code pour changer vers la page parametres
                     imageView.setVisibility(View.INVISIBLE);
                     replaceFragment(new ParametresFragment());
                     return true;
+
+
                 case R.id.barreTacheImage2:
+
+                    fermerPopup();
+
                     // Code pour changer vers la page liste des types
                     imageView.setVisibility(View.VISIBLE);
                     replaceFragment(new ListeTypesFragment());
                     return true;
+
+
                 case R.id.barreTacheImage3:
+
+                    fermerPopup();
+
                     // Code pour changer vers la page d'accueil
                     imageView.setVisibility(View.INVISIBLE);
                     replaceFragment(new AccueilFragment());
                     return true;
+
+
                 case R.id.barreTacheImage4:
+
+                    fermerPopup();
+
                     // Code pour changer vers la page calendrier
                     imageView.setVisibility(View.VISIBLE);
                     replaceFragment(new CalendrierFragment());
                     return true;
+
+
                 case R.id.barreTacheImage5:
+
+                    fermerPopup();
+
                     // Code pour changer vers la page liste des tâches
                     imageView.setVisibility(View.VISIBLE);
                     return true;
@@ -82,6 +109,16 @@ public class MainActivity extends AppCompatActivity {
             fragmentTransaction.commit();
         }
     }
+
+    public void fermerPopup(){
+        //pour gerer le popup si il est ouvert
+        if (popup != null) {
+            // Si oui, la supprimer
+            popup.dismiss();
+            popup = null;
+        }
+    }
+
 
 
 }

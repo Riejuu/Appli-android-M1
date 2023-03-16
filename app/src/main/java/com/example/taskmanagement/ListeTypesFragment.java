@@ -1,6 +1,7 @@
 package com.example.taskmanagement;
 
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 
@@ -9,16 +10,21 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.text.TextUtils;
+import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
 import android.widget.ArrayAdapter;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -53,13 +59,8 @@ public class ListeTypesFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 
-
-
         //on va créer un expandable list view, c est un dire un menu qui quand on clique dessus affiche autre chose
         //ici un menu de type et quand on clique sur le type, ca affiche les taches associées
-
-
-
 
         ExpandableListView expListView = getActivity().findViewById(R.id.expandableListView);
         expListView.removeAllViewsInLayout();       //remove au cas ou on reclique dessus
@@ -83,8 +84,53 @@ public class ListeTypesFragment extends Fragment {
         MenuDeroulantTypes adapter = new MenuDeroulantTypes(getActivity(), typeListe, dictionnaire);
         expListView.setAdapter(adapter);
 
-
+        afficherPopUpTypes(getView(), MainActivity.popup);
 
     }
+
+
+    //la popup d'ajout d'un type
+    public void afficherPopUpTypes(View view, PopupWindow popup)
+    {
+        popup = new PopupWindow(getActivity());
+        //on crée la popup a partir du xml enregistrer_types
+        View popupView = getLayoutInflater().inflate(R.layout.enregistrer_types, null);
+        popup.setContentView(popupView);
+
+        //obtenir la taille de l'écran
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        getActivity().getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        int screenWidth = displayMetrics.widthPixels;
+        int screenHeight = displayMetrics.heightPixels;
+
+        //la popup est un peu eloigné des bords de l'écran
+        popup.setWidth((int) (screenWidth * 0.9));
+        popup.setHeight((int) (screenHeight * 0.9));
+
+
+        //sinon on voit la delimitation de la popup
+        popup.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        popup.showAtLocation(view, Gravity.CENTER, 0, 0);
+
+        //pour finir une petite animation d'apparition
+        Animation fadeInAnimation = new AlphaAnimation(0.0f, 1.0f);
+        fadeInAnimation.setDuration(500);
+        popupView.startAnimation(fadeInAnimation);
+
+        //sinon la variable globale reste null
+        MainActivity.popup = popup;
+
+    }
+
+
+
+
+
+
+
+
+
+
+
 
 }
