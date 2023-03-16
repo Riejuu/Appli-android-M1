@@ -10,6 +10,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
 
@@ -23,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
 
     //donne une variable globale popup pour permettre de facilement gerer la suppression de la popup dans la navigation a travers les views
     static PopupWindow popup = null;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +40,8 @@ public class MainActivity extends AppCompatActivity {
         bottomNavigationView.setSelectedItemId(middleItemId);
 
 
-        ImageView imageView = findViewById(R.id.boutonAjouterEnBasADroite);
+        //je peux pas le rendre static du coup on va le recreer a chaque fois dans les fragments :(
+        ImageView imageView = findViewById(R.id.imageAjouterEnBasADroite);
 
         //attribue les pages aux boutons de la barre des taches
         binding.barreDesTaches.setOnItemSelectedListener(item -> {

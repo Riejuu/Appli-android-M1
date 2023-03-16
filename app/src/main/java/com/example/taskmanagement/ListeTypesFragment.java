@@ -1,31 +1,29 @@
 package com.example.taskmanagement;
 
+import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import android.text.TextUtils;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.DisplayMetrics;
-import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
-import android.widget.ArrayAdapter;
-import android.widget.ExpandableListAdapter;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.PopupWindow;
-import android.widget.Spinner;
+import android.widget.SeekBar;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -36,7 +34,14 @@ import java.util.Map;
 
 public class ListeTypesFragment extends Fragment {
 
+    //fonction de la base de données
     FonctionsDatabase fdb = new FonctionsDatabase();
+
+    //choix de couleur dans la popup
+    TextView couleurTextView;
+    SeekBar barreRouge;
+    SeekBar barreVerte;
+    SeekBar barreBleu;
 
     public ListeTypesFragment() {
         // Required empty public constructor
@@ -84,17 +89,31 @@ public class ListeTypesFragment extends Fragment {
         MenuDeroulantTypes adapter = new MenuDeroulantTypes(getActivity(), typeListe, dictionnaire);
         expListView.setAdapter(adapter);
 
-        afficherPopUpTypes(getView(), MainActivity.popup);
+
+
+        ImageView iv = getActivity().findViewById(R.id.imageAjouterEnBasADroite);
+
+        iv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                afficherPopUpTypes(getView(), MainActivity.popup);
+            }
+        });
+
+
 
     }
 
 
     //la popup d'ajout d'un type
-    public void afficherPopUpTypes(View view, PopupWindow popup)
-    {
-        popup = new PopupWindow(getActivity());
+    //mis dans une fonction pour aerer le code
+    public void afficherPopUpTypes(View view, PopupWindow popup) {
+
+        //besoin de true a la fin, sinon le clavier ne sortira pas quand on cliquera sur l edit text
+        popup = new PopupWindow(view, view.getLayoutParams().WRAP_CONTENT,  view.getLayoutParams().WRAP_CONTENT, true);
+
         //on crée la popup a partir du xml enregistrer_types
-        View popupView = getLayoutInflater().inflate(R.layout.enregistrer_types, null);
+        View popupView = getLayoutInflater().inflate(R.layout.popup_enregistrer_types, null);
         popup.setContentView(popupView);
 
         //obtenir la taille de l'écran
@@ -120,8 +139,75 @@ public class ListeTypesFragment extends Fragment {
         //sinon la variable globale reste null
         MainActivity.popup = popup;
 
+        //on donne les fonctions aux barres pour la couleur dans la fenetre popup
+        setUpCouleur(popupView);
+
+
+
+
+
+
+
+
     }
 
+
+    public void setUpCouleur(View view){
+
+        // on règle la couleur dans la vue popup
+        couleurTextView = view.findViewById(R.id.color_preview);
+        barreRouge = view.findViewById(R.id.red_seekbar);
+        barreVerte = view.findViewById(R.id.green_seekbar);
+        barreBleu = view.findViewById(R.id.blue_seekbar);
+
+        barreRouge.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                updateCouleur();
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {}
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {}
+        });
+        barreVerte.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                updateCouleur();
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {}
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {}
+        });
+
+        barreBleu.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                updateCouleur();
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {}
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {}
+        });
+
+
+    }
+
+    public void updateCouleur() {
+        int red = barreRouge.getProgress();
+        int green = barreVerte.getProgress();
+        int blue = barreBleu.getProgress();
+        int color = Color.rgb(red, green, blue);
+        couleurTextView.setBackgroundColor(color);
+    }
 
 
 
