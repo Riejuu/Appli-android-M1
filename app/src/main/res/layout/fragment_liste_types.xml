@@ -19,8 +19,11 @@
                 android:id="@+id/expandableListView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:divider="@android:color/transparent"
+                android:childDivider="@android:color/transparent"
                 android:dividerHeight="10dp"
                />
+                <!-- transparent sinon on a du gris entre chaque item mere ou fille-->
 
         </LinearLayout>
 
