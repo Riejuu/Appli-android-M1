@@ -1,5 +1,6 @@
 package com.example.taskmanagement;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
@@ -21,10 +22,14 @@ public class MenuDeroulantTypes extends BaseExpandableListAdapter {
     public List<String> typeListe;
     public Map<String, List<String>> dictionnaire;
 
-    public MenuDeroulantTypes(Context context, List<String> typeListe, Map<String, List<String>> dictionnaire) {
+    //rajout de l activity pour pouvoir recuperer l activité des types
+    public Activity activity ;
+
+    public MenuDeroulantTypes(Context context, List<String> typeListe, Map<String, List<String>> dictionnaire,Activity activity) {
         this.context = context;
         this.typeListe = typeListe;
         this.dictionnaire = dictionnaire;
+        this.activity = activity;
     }
 
     @Override
@@ -83,7 +88,9 @@ public class MenuDeroulantTypes extends BaseExpandableListAdapter {
         //change la couleur pour l'adapter a celle de la db
         GradientDrawable drawable = new GradientDrawable();
         drawable.setShape(GradientDrawable.RECTANGLE);
-        drawable.setColor(Color.GREEN);                          //TODO CHANGER CETTE LIGNE PAR LA COULEUR DU TYPE QUAND CELA SERA FAIT
+
+        FonctionsDatabase fdb = new FonctionsDatabase();
+        drawable.setColor(Color.parseColor(fdb.getColorOfOneType(activity,type)));
 
         typeItem.setBackground(drawable);
         return convertView;

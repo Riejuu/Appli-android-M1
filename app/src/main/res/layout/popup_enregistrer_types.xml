@@ -21,13 +21,14 @@
 
         <TextView
             android:text="@string/type"
+            android:id="@+id/nouveauTypeTV"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/white"
             />
 
         <EditText
-            android:id="@+id/nouvelleTache"
+            android:id="@+id/nouveauType"
             android:hint="@string/typeDeTaches"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -38,6 +39,7 @@
 
         <TextView
             android:text="@string/couleur"
+            android:id="@+id/couleurTV"
             android:layout_marginTop="50dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -89,7 +91,7 @@
 
     <!--bouton fermer -->
     <Button
-        android:id="@+id/fermer"
+        android:id="@+id/boutonPopupFermer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/fermer"

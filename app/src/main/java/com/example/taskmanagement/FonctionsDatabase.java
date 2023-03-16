@@ -342,7 +342,41 @@ public class FonctionsDatabase {
         return listeTypes;
     }
 
+    public String getColorOfOneType(Activity a, String type) {
 
+        Database dbHelper = new Database(a);
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+
+        String[] projection = {
+                TypesEntry.COLUMN_ID,
+                TypesEntry.COLUMN_TYPE,
+                TypesEntry.COLUMN_COULEUR,
+        };
+
+        String selection = TypesEntry.COLUMN_TYPE + " = ?";
+        String[] selectionArgs = { type };
+
+        Cursor cursor = db.query(
+                TypesEntry.TABLE_NAME,
+                projection,
+                selection,
+                selectionArgs,
+                null,
+                null,
+                null
+        );
+
+        String couleur = "";
+
+        if (cursor.moveToFirst()) {
+            couleur = cursor.getString(cursor.getColumnIndexOrThrow(TypesEntry.COLUMN_COULEUR));
+        }
+
+        cursor.close();
+        db.close();
+
+        return couleur;
+    }
 
     public void deleteTypes(Activity a,String type) {
         Database dbHelper = new Database(a);
