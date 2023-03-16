@@ -10,4 +10,5 @@
     android:padding="20dp"
     android:textSize="20sp"
     android:textColor="@android:color/black"
-    android:background="#000000" /> <!-- modifier dans le code java-->
+    android:background="@drawable/rectangle_arrondi" />
+    <!-- la couleur est un placeholder, il est modifié par la couleur du type dans la classe MenuDeroulantTypes -->

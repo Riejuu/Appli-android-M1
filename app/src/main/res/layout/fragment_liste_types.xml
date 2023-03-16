@@ -11,12 +11,16 @@
             android:id="@+id/linearLayoutTypes"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp">
 
             <ExpandableListView
                 android:id="@+id/expandableListView"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:dividerHeight="10dp"
+               />
 
         </LinearLayout>
 

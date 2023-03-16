@@ -3,6 +3,8 @@ package com.example.taskmanagement;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -86,13 +88,10 @@ public class MenuDeroulantTypes extends BaseExpandableListAdapter {
         typeItem.setText(type);
 
         //change la couleur pour l'adapter a celle de la db
-        GradientDrawable drawable = new GradientDrawable();
-        drawable.setShape(GradientDrawable.RECTANGLE);
+        Drawable backgroundDrawable = typeItem.getBackground();
 
         FonctionsDatabase fdb = new FonctionsDatabase();
-        drawable.setColor(Color.parseColor(fdb.getColorOfOneType(activity,type)));
-
-        typeItem.setBackground(drawable);
+        backgroundDrawable.setColorFilter(Color.parseColor(fdb.getColorOfOneType(activity,type)), PorterDuff.Mode.SRC_ATOP);
         return convertView;
     }
 
