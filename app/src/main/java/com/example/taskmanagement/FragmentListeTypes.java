@@ -149,7 +149,7 @@ public class FragmentListeTypes extends Fragment {
 
         //le bouton enregistrer
 
-        Button bEnregistrer = popupView.findViewById(R.id.boutonPopupEnregistrement);
+        Button bEnregistrer = popupView.findViewById(R.id.boutonPopupEnregistrementType);
 
         bEnregistrer.setOnClickListener(osef -> {
             EditText type = popupView.findViewById(R.id.nouveauType);
@@ -164,13 +164,13 @@ public class FragmentListeTypes extends Fragment {
             }else {
                 //si l edit text est vide, on coloris en rouge pour lui dire
                 if (TextUtils.isEmpty(type.getText().toString().trim())) {
-                    System.out.println("type null");
+
                     TextView tvType = popupView.findViewById(R.id.nouveauTypeTV);
                     tvType.setTextColor(Color.RED);
                 }
                 //si les barre sont tous a 0 on colorie en rouge pour lui dire
                 if (barreRouge.getProgress() == 0 && barreVerte.getProgress() == 0 && barreBleu.getProgress() == 0) {
-                    System.out.println("hexa null");
+
                     TextView tvCouleur = popupView.findViewById(R.id.couleurTV);
                     tvCouleur.setTextColor(Color.RED);
                 }

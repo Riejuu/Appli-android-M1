@@ -24,6 +24,8 @@ public class MenuDeroulantTypes extends BaseExpandableListAdapter {
     public List<String> typeListe;
     public Map<String, List<String>> dictionnaire;
 
+    FonctionsDatabase fdb = new FonctionsDatabase();
+
     //rajout de l activity pour pouvoir recuperer l activité des types
     public Activity activity ;
 
@@ -90,7 +92,6 @@ public class MenuDeroulantTypes extends BaseExpandableListAdapter {
         //change la couleur pour l'adapter a celle de la db
         Drawable backgroundDrawable = typeItem.getBackground();
 
-        FonctionsDatabase fdb = new FonctionsDatabase();
         backgroundDrawable.setColorFilter(Color.parseColor(fdb.getColorOfOneType(activity,type)), PorterDuff.Mode.SRC_ATOP);
         return convertView;
     }

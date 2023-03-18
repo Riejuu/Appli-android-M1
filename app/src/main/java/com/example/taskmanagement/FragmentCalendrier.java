@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
@@ -51,20 +52,6 @@ public class FragmentCalendrier extends Fragment {
 
 
         CalendarView calendarView = getActivity().findViewById(R.id.calendarView);
-
-
-
-        //fdb.addEvenement(getActivity(), "test", "Travail", 2023, 3, 3, 0);
-        //fdb.addEvenement(getActivity(), "test", "Devoir", 2023, 3, 3, 0);
-        //fdb.deleteEvenement(getActivity(), 5);
-        //fdb.showAllEvenement(getActivity());
-
-        /*
-        fdb.addTypes(getActivity(), "menage");
-        fdb.deleteTypes(getActivity(), "menage");
-        fdb.showAllTypes(getActivity());
-        */
-
 
         //quand on selectionne une case du calendrier recupère ou on est et
         calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
@@ -120,6 +107,11 @@ public class FragmentCalendrier extends Fragment {
         TextView tv = view.findViewById(R.id.evenementNom);
         tv.setText(eve.nom);
 
+        //change de couleur de fond pour avoir celui du type
+        Drawable backgroundDrawableTV = tv.getBackground();
+        backgroundDrawableTV.setColorFilter(Color.parseColor(fdb.getColorOfOneType(getActivity(),eve.type)), PorterDuff.Mode.SRC_ATOP);
+
+
         //je recupere l image et lui affecte un un on click effect mais aussi l image associé a si on a validé ou non
         ImageView iv = view.findViewById(R.id.evenementValide); //modifier cette ligne
         iv.setImageResource( (eve.valide)? R.drawable.tache_faite : R.drawable.tache_pas_faite );
@@ -135,6 +127,11 @@ public class FragmentCalendrier extends Fragment {
 
             }
         });
+
+        //meme couleur de fond
+        Drawable backgroundDrawableIV = iv.getBackground();
+        backgroundDrawableIV.setColorFilter(Color.parseColor(fdb.getColorOfOneType(getActivity(),eve.type)), PorterDuff.Mode.SRC_ATOP);
+
 
         parentLayout.addView(view);
 

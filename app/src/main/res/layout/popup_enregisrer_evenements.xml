@@ -20,8 +20,8 @@
 
 
         <TextView
-            android:text="@string/type"
-            android:id="@+id/nouveauTypeTV"
+            android:text="@string/nomTache"
+            android:id="@+id/nouveauEvenementNomTV"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/white"
@@ -39,105 +39,60 @@
 
         <TextView
             android:text="@string/type"
+            android:id="@+id/nouveauEvenementTypeTV"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/white"
             />
 
-        <EditText
+        <Spinner
             android:id="@+id/evenementType"
-            android:hint="@string/typeDeTaches"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColorHint="@color/white"
-            android:textColor="@color/white"
-            android:inputType="text"
-            android:maxLines="1"/>
+            android:backgroundTint="#FFFFFF"/>
+
 
         <TextView
-            android:text="@string/type"
+            android:text="@string/evenementDate"
+            android:id="@+id/nouveauEvenementDateTV"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/white"
             />
 
-        <EditText
-            android:id="@+id/evenementAnnee"
-            android:hint="@string/typeDeTaches"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColorHint="@color/white"
-            android:textColor="@color/white"
-            android:inputType="text"
-            android:maxLines="1"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
-        <TextView
-            android:text="@string/type"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/white"
-            />
 
-        <EditText
-            android:id="@+id/evenementMois"
-            android:hint="@string/typeDeTaches"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColorHint="@color/white"
-            android:textColor="@color/white"
-            android:inputType="text"
-            android:maxLines="1"/>
-
-        <TextView
-            android:text="@string/type"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/white"
-            />
-
-        <EditText
+        <Spinner
             android:id="@+id/evenementJour"
-            android:hint="@string/typeDeTaches"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColorHint="@color/white"
-            android:textColor="@color/white"
-            android:inputType="text"
-            android:maxLines="1"/>
-
-        <TextView
-            android:text="@string/type"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/white"
-            />
+            android:layout_weight="0.25"
+            android:backgroundTint="#FFFFFF"/>
 
-        <EditText
-            android:id="@+id/evenementHeure"
-            android:hint="@string/typeDeTaches"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColorHint="@color/white"
-            android:textColor="@color/white"
-            android:inputType="text"
-            android:maxLines="1"/>
-
-        <TextView
-            android:text="@string/type"
+        <Spinner
+            android:id="@+id/evenementMois"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/white"
-            />
+            android:layout_weight="0.25"
+            android:backgroundTint="#FFFFFF"/>
 
-        <EditText
-            android:id="@+id/evenementMinute"
-            android:hint="@string/typeDeTaches"
-            android:layout_width="match_parent"
+        <Spinner
+            android:id="@+id/evenementAnnee"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColorHint="@color/white"
-            android:textColor="@color/white"
-            android:inputType="text"
-            android:maxLines="1"/>
+            android:layout_weight="0.5"
+            android:backgroundTint="#FFFFFF"/>
+
+
+    </LinearLayout>
+
+
+
+
 
 
 
@@ -147,7 +102,7 @@
 
     <!--bouton fermer -->
     <Button
-        android:id="@+id/boutonPopupFermer"
+        android:id="@+id/boutonPopupFermerEvenement"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/fermer"
@@ -156,7 +111,7 @@
 
     <!-- bouton enregistrer type dans la dp-->
     <Button
-        android:id="@+id/boutonPopupEnregistrement"
+        android:id="@+id/boutonPopupEnregistrementEvenement"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/enregistrer"

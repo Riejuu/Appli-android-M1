@@ -7,4 +7,8 @@
     <string name="enregistrer">Enregistrer</string>
     <string name="fermer">Fermer</string>
 
+
+    <string name="nomTache">Nom :</string>
+    <string name="evenementDate">Date :</string>
+
 </resources>
