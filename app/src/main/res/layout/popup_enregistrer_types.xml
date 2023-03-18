@@ -31,12 +31,14 @@
             android:id="@+id/nouveauType"
             android:hint="@string/typeDeTaches"
             android:layout_width="match_parent"
-            android:layout_height="30dp"
+            android:layout_height="50dp"
             android:textColorHint="@color/grey"
-            android:background="@drawable/rectangle_arrondi_a_bordure"
+            android:background="@drawable/rectangle_arrondi_blanc"
             android:textColor="@color/white"
             android:inputType="text"
             android:maxLines="1"
+            android:layout_marginTop="16dp"
+            android:textAlignment="center"
             />
 
         <TextView

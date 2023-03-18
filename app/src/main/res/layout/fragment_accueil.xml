@@ -1,19 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".FragmentAccueil">
 
-    <!-- TODO: Update blank fragment layout -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
 
 
-    <!--graphique pie chart -->
-    <org.eazegraph.lib.charts.PieChart
-        android:id="@+id/pieGraph"
-        android:layout_width="100dp"
-        android:layout_height="100dp" />
+    <LinearLayout
+        android:id="@+id/linearLayoutAccueilVertical"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        >
 
 
+        <!-- on include le linear layout horizontale pour chaque double chart -->
 
-</FrameLayout>
+
+    </LinearLayout>
+
+    </ScrollView>
+</RelativeLayout>

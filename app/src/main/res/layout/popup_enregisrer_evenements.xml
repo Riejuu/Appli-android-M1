@@ -31,13 +31,14 @@
             android:id="@+id/evenementNom"
             android:hint="@string/typeDeEvenement"
             android:layout_width="match_parent"
-            android:layout_height="30dp"
+            android:layout_height="50dp"
             android:textAlignment="center"
             android:textColorHint="@color/grey"
             android:textColor="@color/white"
             android:inputType="text"
             android:maxLines="1"
-            android:background="@drawable/rectangle_arrondi_a_bordure"
+            android:background="@drawable/rectangle_arrondi_blanc"
+            android:layout_marginTop="16dp"
             />
 
         <TextView
@@ -50,12 +51,14 @@
             />
 
         <Spinner
+            android:layout_marginTop="16dp"
             android:id="@+id/evenementType"
             android:layout_width="match_parent"
-            android:layout_height="30dp"
+            android:layout_height="50dp"
             android:backgroundTint="#FFFFFF"
+            android:textAlignment="center"
             android:textColorHint="@color/grey"
-            android:background="@drawable/rectangle_arrondi_a_bordure"/>
+            android:background="@drawable/rectangle_arrondi_blanc"/>
 
 
         <TextView
@@ -78,28 +81,31 @@
         <Spinner
             android:id="@+id/evenementJour"
             android:layout_width="wrap_content"
-            android:layout_height="30dp"
+            android:layout_height="50dp"
             android:layout_weight="0.25"
             android:backgroundTint="#FFFFFF"
             android:textColorHint="@color/grey"
-            android:background="@drawable/rectangle_arrondi_a_bordure"/>
+            android:textAlignment="center"
+            android:background="@drawable/rectangle_blanc_arrondi_gauche"/>
 
         <Spinner
             android:id="@+id/evenementMois"
             android:layout_width="wrap_content"
-            android:layout_height="30dp"
+            android:layout_height="50dp"
             android:layout_weight="0.25"
             android:backgroundTint="#FFFFFF"
             android:textColorHint="@color/grey"
-            android:background="@drawable/rectangle_arrondi_a_bordure"/>
+            android:textAlignment="center"
+            android:background="@drawable/rectangle_blanc"/>
 
         <Spinner
             android:id="@+id/evenementAnnee"
             android:layout_width="wrap_content"
-            android:layout_height="30dp"
+            android:layout_height="50dp"
             android:layout_weight="0.5"
             android:backgroundTint="#FFFFFF"
-            android:background="@drawable/rectangle_arrondi_a_bordure"/>
+            android:textAlignment="center"
+            android:background="@drawable/rectangle_blanc_arrondi_droite"/>
 
 
     </LinearLayout>

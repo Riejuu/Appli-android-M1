@@ -1,0 +1,22 @@
+<!--ce linear est la juste pour avoir le droit de mettre un pieChart et un textview ensemble dans le xml -->
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    android:layout_weight="1">
+
+    <org.eazegraph.lib.charts.PieChart
+        android:id="@+id/pieGraph"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        />
+
+    <TextView
+        android:id="@+id/accueilTitrePieChart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>

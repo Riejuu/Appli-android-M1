@@ -5,13 +5,20 @@
       <map>
         <entry key="..\:/Users/esteb/projet-android-m1/Appli-android-M1/app/src/main/res/drawable-anydpi/parametres.xml" value="0.248" />
         <entry key="..\:/Users/esteb/projet-android-m1/Appli-android-M1/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.248" />
+        <entry key="..\:/Users/esteb/projet-android-m1/Appli-android-M1/app/src/main/res/drawable/accueil_graphique_circulaire.xml" value="0.248" />
         <entry key="..\:/Users/esteb/projet-android-m1/Appli-android-M1/app/src/main/res/drawable/bords_arrondis.xml" value="0.238" />
         <entry key="..\:/Users/esteb/projet-android-m1/Appli-android-M1/app/src/main/res/drawable/bords_arrondis_popup.xml" value="0.248" />
         <entry key="..\:/Users/esteb/projet-android-m1/Appli-android-M1/app/src/main/res/drawable/ic_launcher_background.xml" value="0.1935" />
         <entry key="..\:/Users/esteb/projet-android-m1/Appli-android-M1/app/src/main/res/drawable/rectangle_arrondi.xml" value="0.356" />
         <entry key="..\:/Users/esteb/projet-android-m1/Appli-android-M1/app/src/main/res/drawable/rectangle_arrondi_a_bordure.xml" value="0.238" />
+        <entry key="..\:/Users/esteb/projet-android-m1/Appli-android-M1/app/src/main/res/drawable/rectangle_arrondi_blanc.xml" value="0.248" />
         <entry key="..\:/Users/esteb/projet-android-m1/Appli-android-M1/app/src/main/res/drawable/rectangle_arrondi_droite.xml" value="0.248" />
         <entry key="..\:/Users/esteb/projet-android-m1/Appli-android-M1/app/src/main/res/drawable/rectangle_arrondi_gauche.xml" value="0.3515" />
+        <entry key="..\:/Users/esteb/projet-android-m1/Appli-android-M1/app/src/main/res/drawable/rectangle_blanc.xml" value="0.248" />
+        <entry key="..\:/Users/esteb/projet-android-m1/Appli-android-M1/app/src/main/res/drawable/rectangle_blanc_arrondi_droite.xml" value="0.248" />
+        <entry key="..\:/Users/esteb/projet-android-m1/Appli-android-M1/app/src/main/res/drawable/rectangle_blanc_arrondi_gauche.xml" value="0.248" />
+        <entry key="..\:/Users/esteb/projet-android-m1/Appli-android-M1/app/src/main/res/layout/accueil_graphique_circulaire.xml" value="0.2421875" />
+        <entry key="..\:/Users/esteb/projet-android-m1/Appli-android-M1/app/src/main/res/layout/accueil_linearlayout_horizontal.xml" value="0.2421875" />
         <entry key="..\:/Users/esteb/projet-android-m1/Appli-android-M1/app/src/main/res/layout/activity_main.xml" value="0.25" />
         <entry key="..\:/Users/esteb/projet-android-m1/Appli-android-M1/app/src/main/res/layout/calendrier.xml" value="0.25" />
         <entry key="..\:/Users/esteb/projet-android-m1/Appli-android-M1/app/src/main/res/layout/calendrier_evenements.xml" value="0.33" />
