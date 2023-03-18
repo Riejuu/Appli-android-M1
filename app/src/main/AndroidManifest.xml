@@ -3,8 +3,7 @@
     package="com.example.taskmanagement">
 
 
-    <uses-permission android:name="android.permission.READ_CALENDAR" />
-    <uses-permission android:name="android.permission.WRITE_CALENDAR" />
+
 
 
     <application
@@ -16,7 +15,8 @@
         android:theme="@style/Theme.TaskManagement">
         <activity
             android:name=".MainActivity"
-            android:exported="true">
+            android:exported="true"
+            android:theme="@style/Theme.AppCompat.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

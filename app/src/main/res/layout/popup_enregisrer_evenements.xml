@@ -29,13 +29,16 @@
 
         <EditText
             android:id="@+id/evenementNom"
-            android:hint="@string/typeDeTaches"
+            android:hint="@string/typeDeEvenement"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColorHint="@color/white"
+            android:layout_height="30dp"
+            android:textAlignment="center"
+            android:textColorHint="@color/grey"
             android:textColor="@color/white"
             android:inputType="text"
-            android:maxLines="1"/>
+            android:maxLines="1"
+            android:background="@drawable/rectangle_arrondi_a_bordure"
+            />
 
         <TextView
             android:text="@string/type"
@@ -43,13 +46,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/white"
+            android:layout_marginTop="16dp"
             />
 
         <Spinner
             android:id="@+id/evenementType"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:backgroundTint="#FFFFFF"/>
+            android:layout_height="30dp"
+            android:backgroundTint="#FFFFFF"
+            android:textColorHint="@color/grey"
+            android:background="@drawable/rectangle_arrondi_a_bordure"/>
 
 
         <TextView
@@ -58,34 +64,42 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/white"
+            android:layout_marginTop="16dp"
             />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_marginTop="16dp"
+        android:textColorHint="@color/grey">
 
 
         <Spinner
             android:id="@+id/evenementJour"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="30dp"
             android:layout_weight="0.25"
-            android:backgroundTint="#FFFFFF"/>
+            android:backgroundTint="#FFFFFF"
+            android:textColorHint="@color/grey"
+            android:background="@drawable/rectangle_arrondi_a_bordure"/>
 
         <Spinner
             android:id="@+id/evenementMois"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="30dp"
             android:layout_weight="0.25"
-            android:backgroundTint="#FFFFFF"/>
+            android:backgroundTint="#FFFFFF"
+            android:textColorHint="@color/grey"
+            android:background="@drawable/rectangle_arrondi_a_bordure"/>
 
         <Spinner
             android:id="@+id/evenementAnnee"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="30dp"
             android:layout_weight="0.5"
-            android:backgroundTint="#FFFFFF"/>
+            android:backgroundTint="#FFFFFF"
+            android:background="@drawable/rectangle_arrondi_a_bordure"/>
 
 
     </LinearLayout>

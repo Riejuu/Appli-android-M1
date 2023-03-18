@@ -7,21 +7,22 @@
     <item
         android:id="@+id/barreTacheImage1"
         android:icon="@drawable/parametres"
-        android:title="hey" />
+        android:title="Paramètres"
+        />
     <item
         android:id="@+id/barreTacheImage2"
         android:icon="@drawable/parametres"
-        android:title="hey" />
+        android:title="Types" />
     <item
         android:id="@+id/barreTacheImage3"
         android:icon="@drawable/parametres"
-        android:title="hey" />
+        android:title="Accueil" />
     <item
         android:id="@+id/barreTacheImage4"
-        android:icon="@drawable/parametres"
-        android:title="hey" />
+        android:icon="@drawable/calendrier"
+        android:title="Calendrier" />
     <item
         android:id="@+id/barreTacheImage5"
         android:icon="@drawable/parametres"
-        android:title="hey" />
+        android:title="Evenements" />
 </menu>

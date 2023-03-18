@@ -10,5 +10,6 @@
 
     <string name="nomTache">Nom :</string>
     <string name="evenementDate">Date :</string>
+    <string name="typeDeEvenement">Definissez le type d\'evenement</string>
 
 </resources>

@@ -39,6 +39,9 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0"
         app:menu="@menu/barre_des_taches"
-        tools:layout_editor_absoluteX="205dp" />
+        tools:layout_editor_absoluteX="205dp"
+        app:itemIconTint="@color/grey"
+        app:itemTextColor="@color/grey"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
