@@ -35,7 +35,7 @@ import java.util.List;
 import java.util.Map;
 
 
-public class ListeTypesFragment extends Fragment {
+public class FragmentListeTypes extends Fragment {
 
     //fonction de la base de données
     FonctionsDatabase fdb = new FonctionsDatabase();
@@ -46,7 +46,7 @@ public class ListeTypesFragment extends Fragment {
     SeekBar barreVerte;
     SeekBar barreBleu;
 
-    public ListeTypesFragment() {
+    public FragmentListeTypes() {
         // Required empty public constructor
     }
 

@@ -8,10 +8,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class ParametresFragment extends Fragment {
+public class FragmentParametres extends Fragment {
 
 
-    public ParametresFragment() {
+    public FragmentParametres() {
     }
 
     @Override

@@ -16,8 +16,6 @@ public class Database extends SQLiteOpenHelper {
             + "annee INTEGER, "
             + "mois INTEGER, "
             + "jour INTEGER, "
-            + "heure INTEGER, "
-            + "minute INTEGER,"
             + "valide INTEGER DEFAULT 0)";
 
     String createTypes = "CREATE TABLE types ("

@@ -51,7 +51,7 @@ public class FragmentListeEvenements extends Fragment {
         TextView tv = view.findViewById(R.id.listeEvenementsEvenement);
         tv.setText(eve.nom);
 
-        parentLayout.addView(view);
+       parentLayout.addView(view);
 
 
     }

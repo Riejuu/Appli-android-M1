@@ -24,8 +24,6 @@ public class FonctionsDatabase {
         public static final String COLUMN_ANNEE = "annee";
         public static final String COLUMN_MOIS = "mois";
         public static final String COLUMN_JOUR = "jour";
-        public static final String COLUMN_HEURE = "heure";
-        public static final String COLUMN_MINUTE = "minute";
         public static final String COLUMN_VALIDE = "valide";
     }
 
@@ -39,7 +37,7 @@ public class FonctionsDatabase {
 
     //TABLE EVENEMENT
 
-    public void addEvenement(Activity a, String _nom, String _type, int _annee, int _mois, int _jour, int _heure, int _minute, int _valide) {
+    public void addEvenement(Activity a, String _nom, String _type, int _annee, int _mois, int _jour,int _valide) {
 
         if(!typeExists(a,_type))
             addTypes(a, _type, "#AAAAAA");      //dans le cas ou on invoque la fonction pour un type qui n existe pas (ce n'est pas censé arriver si tout ce passe bien)
@@ -52,8 +50,6 @@ public class FonctionsDatabase {
         values.put("annee", _annee);
         values.put("mois", _mois);
         values.put("jour", _jour);
-        values.put("heure", _heure);
-        values.put("minute", _minute);
         values.put("valide", _valide);
         long newRowId = db.insert("evenement", null, values);
     }
@@ -72,8 +68,6 @@ public class FonctionsDatabase {
                 EvenementEntry.COLUMN_ANNEE,
                 EvenementEntry.COLUMN_MOIS,
                 EvenementEntry.COLUMN_JOUR,
-                EvenementEntry.COLUMN_HEURE,
-                EvenementEntry.COLUMN_MINUTE,
                 EvenementEntry.COLUMN_VALIDE
         };
 
@@ -94,10 +88,8 @@ public class FonctionsDatabase {
             int annee = cursor.getInt(cursor.getColumnIndexOrThrow(EvenementEntry.COLUMN_ANNEE));
             int jour = cursor.getInt(cursor.getColumnIndexOrThrow(EvenementEntry.COLUMN_JOUR));
             int mois = cursor.getInt(cursor.getColumnIndexOrThrow(EvenementEntry.COLUMN_MOIS));
-            int heure = cursor.getInt(cursor.getColumnIndexOrThrow(EvenementEntry.COLUMN_HEURE));
-            int minute = cursor.getInt(cursor.getColumnIndexOrThrow(EvenementEntry.COLUMN_MINUTE));
             boolean valide = cursor.getInt(cursor.getColumnIndexOrThrow(EvenementEntry.COLUMN_VALIDE)) == 1? true : false;
-            System.out.println("id : "+id +" nom : "+ nom +" type: "+ type +" annee : "+ annee +" mois : "+ mois +" jour : "+ jour +" heure : "+ heure +" minute : "+ minute + " valide : "+ valide);
+            System.out.println("id : "+id +" nom : "+ nom +" type: "+ type +" annee : "+ annee +" mois : "+ mois +" jour : "+ jour +" heure : "+ " valide : "+ valide);
         }
 
         cursor.close();
@@ -117,8 +109,6 @@ public class FonctionsDatabase {
                 EvenementEntry.COLUMN_ANNEE,
                 EvenementEntry.COLUMN_MOIS,
                 EvenementEntry.COLUMN_JOUR,
-                EvenementEntry.COLUMN_HEURE,
-                EvenementEntry.COLUMN_MINUTE,
                 EvenementEntry.COLUMN_VALIDE
         };
 
@@ -135,7 +125,7 @@ public class FonctionsDatabase {
 
         ArrayList<Evenement> listeEvenements = new ArrayList<>();
         while (cursor.moveToNext()) {
-            // public Evenement(int _id, String _nom, String _type, int _annee, int _mois, int _jour, int _heure, int _minute, boolean _valide)
+            // public Evenement(int _id, String _nom, String _type, int _annee, int _mois, int _jour, boolean _valide)
             Evenement osef = new Evenement(
                     cursor.getInt(cursor.getColumnIndexOrThrow(EvenementEntry.COLUMN_ID)),
                     cursor.getString(cursor.getColumnIndexOrThrow(EvenementEntry.COLUMN_NOM)),
@@ -143,8 +133,6 @@ public class FonctionsDatabase {
                     cursor.getInt(cursor.getColumnIndexOrThrow(EvenementEntry.COLUMN_ANNEE)),
                     cursor.getInt(cursor.getColumnIndexOrThrow(EvenementEntry.COLUMN_MOIS)),
                     cursor.getInt(cursor.getColumnIndexOrThrow(EvenementEntry.COLUMN_JOUR)),
-                    cursor.getInt(cursor.getColumnIndexOrThrow(EvenementEntry.COLUMN_HEURE)),
-                    cursor.getInt(cursor.getColumnIndexOrThrow(EvenementEntry.COLUMN_MINUTE)),
                     cursor.getInt(cursor.getColumnIndexOrThrow(EvenementEntry.COLUMN_VALIDE)) == 1? true : false);
 
             listeEvenements.add(osef);
@@ -169,8 +157,6 @@ public class FonctionsDatabase {
                 EvenementEntry.COLUMN_ANNEE,
                 EvenementEntry.COLUMN_MOIS,
                 EvenementEntry.COLUMN_JOUR,
-                EvenementEntry.COLUMN_HEURE,
-                EvenementEntry.COLUMN_MINUTE,
                 EvenementEntry.COLUMN_VALIDE
         };
 
@@ -193,7 +179,7 @@ public class FonctionsDatabase {
 
 
         while (cursor.moveToNext()) {
-           // public Evenement(int _id, String _nom, String _type, int _annee, int _mois, int _jour, int _heure, int _minute, boolean _valide)
+           // public Evenement(int _id, String _nom, String _type, int _annee, int _mois, int _jour, boolean _valide)
             Evenement osef = new Evenement(
                     cursor.getInt(cursor.getColumnIndexOrThrow(EvenementEntry.COLUMN_ID)),
                     cursor.getString(cursor.getColumnIndexOrThrow(EvenementEntry.COLUMN_NOM)),
@@ -201,8 +187,6 @@ public class FonctionsDatabase {
                     cursor.getInt(cursor.getColumnIndexOrThrow(EvenementEntry.COLUMN_ANNEE)),
                     cursor.getInt(cursor.getColumnIndexOrThrow(EvenementEntry.COLUMN_MOIS)),
                     cursor.getInt(cursor.getColumnIndexOrThrow(EvenementEntry.COLUMN_JOUR)),
-                    cursor.getInt(cursor.getColumnIndexOrThrow(EvenementEntry.COLUMN_HEURE)),
-                    cursor.getInt(cursor.getColumnIndexOrThrow(EvenementEntry.COLUMN_MINUTE)),
                     cursor.getInt(cursor.getColumnIndexOrThrow(EvenementEntry.COLUMN_VALIDE)) == 1? true : false);
 
             listeEvenements.add(osef);
@@ -225,8 +209,6 @@ public class FonctionsDatabase {
                 EvenementEntry.COLUMN_ANNEE,
                 EvenementEntry.COLUMN_MOIS,
                 EvenementEntry.COLUMN_JOUR,
-                EvenementEntry.COLUMN_HEURE,
-                EvenementEntry.COLUMN_MINUTE,
                 EvenementEntry.COLUMN_VALIDE
         };
 
@@ -247,7 +229,7 @@ public class FonctionsDatabase {
 
 
         while (cursor.moveToNext()) {
-            // public Evenement(int _id, String _nom, String _type, int _annee, int _mois, int _jour, int _heure, int _minute, boolean _valide)
+            // public Evenement(int _id, String _nom, String _type, int _annee, int _mois, int _jour, boolean _valide)
             Evenement osef = new Evenement(
                     cursor.getInt(cursor.getColumnIndexOrThrow(EvenementEntry.COLUMN_ID)),
                     cursor.getString(cursor.getColumnIndexOrThrow(EvenementEntry.COLUMN_NOM)),
@@ -255,8 +237,6 @@ public class FonctionsDatabase {
                     cursor.getInt(cursor.getColumnIndexOrThrow(EvenementEntry.COLUMN_ANNEE)),
                     cursor.getInt(cursor.getColumnIndexOrThrow(EvenementEntry.COLUMN_MOIS)),
                     cursor.getInt(cursor.getColumnIndexOrThrow(EvenementEntry.COLUMN_JOUR)),
-                    cursor.getInt(cursor.getColumnIndexOrThrow(EvenementEntry.COLUMN_HEURE)),
-                    cursor.getInt(cursor.getColumnIndexOrThrow(EvenementEntry.COLUMN_MINUTE)),
                     cursor.getInt(cursor.getColumnIndexOrThrow(EvenementEntry.COLUMN_VALIDE)) == 1? true : false);
 
             listeEvenements.add(osef);

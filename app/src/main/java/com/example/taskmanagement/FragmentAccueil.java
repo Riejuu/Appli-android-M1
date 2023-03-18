@@ -19,12 +19,12 @@ import org.eazegraph.lib.models.PieModel;
 import java.util.ArrayList;
 
 
-public class AccueilFragment extends Fragment {
+public class FragmentAccueil extends Fragment {
 
 
     FonctionsDatabase fdb = new FonctionsDatabase();
 
-    public AccueilFragment() {
+    public FragmentAccueil() {
 
     }
 

@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());  //content view changé pour avoir la barre des taches fonctionnelle
-        replaceFragment(new AccueilFragment()); //ce met sur le fragment d'accueil de base
+        replaceFragment(new FragmentAccueil()); //ce met sur le fragment d'accueil de base
 
 
         //set l'image du curseur
@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
 
                     // Code pour changer vers la page parametres
                     imageView.setVisibility(View.INVISIBLE);
-                    replaceFragment(new ParametresFragment());
+                    replaceFragment(new FragmentParametres());
                     return true;
 
 
@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
 
                     // Code pour changer vers la page liste des types
                     imageView.setVisibility(View.VISIBLE);
-                    replaceFragment(new ListeTypesFragment());
+                    replaceFragment(new FragmentListeTypes());
                     return true;
 
 
@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
 
                     // Code pour changer vers la page d'accueil
                     imageView.setVisibility(View.INVISIBLE);
-                    replaceFragment(new AccueilFragment());
+                    replaceFragment(new FragmentAccueil());
                     return true;
 
 
@@ -74,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
 
                     // Code pour changer vers la page calendrier
                     imageView.setVisibility(View.INVISIBLE);
-                    replaceFragment(new CalendrierFragment());
+                    replaceFragment(new FragmentCalendrier());
                     return true;
 
 

@@ -31,11 +31,11 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-public class CalendrierFragment extends Fragment {
+public class FragmentCalendrier extends Fragment {
 
     FonctionsDatabase fdb = new FonctionsDatabase();
 
-    public CalendrierFragment() {
+    public FragmentCalendrier() {
 
     }
 
@@ -54,7 +54,8 @@ public class CalendrierFragment extends Fragment {
 
 
 
-        //fdb.addEvenement(getActivity(), "test", "Travail", 2023, 3, 3, 5, 5, 0);
+        //fdb.addEvenement(getActivity(), "test", "Travail", 2023, 3, 3, 0);
+        //fdb.addEvenement(getActivity(), "test", "Devoir", 2023, 3, 3, 0);
         //fdb.deleteEvenement(getActivity(), 5);
         //fdb.showAllEvenement(getActivity());
 
