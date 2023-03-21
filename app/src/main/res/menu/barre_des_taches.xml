@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 
-<!--barre des taches en bas, a mettre sous toutes les fenetres-->
+<!--barre des taches en bas-->
 
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item

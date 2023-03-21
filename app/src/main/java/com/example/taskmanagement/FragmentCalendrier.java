@@ -1,36 +1,21 @@
 package com.example.taskmanagement;
 
-import android.app.Activity;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
-import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
-import android.text.Spannable;
-import android.text.SpannableString;
-import android.text.Spanned;
-import android.text.TextUtils;
-import android.text.style.ImageSpan;
-import android.util.TypedValue;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CalendarView;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
-import java.util.ArrayList;
 
 public class FragmentCalendrier extends Fragment {
 
@@ -102,7 +87,7 @@ public class FragmentCalendrier extends Fragment {
     public void afficherEvenementCalendrier(Evenement eve){
 
         LinearLayout parentLayout = getActivity().findViewById(R.id.linearLayoutCalendrier);
-        View view = LayoutInflater.from(getContext()).inflate(R.layout.calendrier_evenements, parentLayout, false);
+        View view = LayoutInflater.from(getContext()).inflate(R.layout.evenements_cochable, parentLayout, false);
 
         TextView tv = view.findViewById(R.id.evenementNom);
         tv.setText(eve.nom);

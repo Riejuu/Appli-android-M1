@@ -67,7 +67,7 @@ public class FragmentListeEvenements extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 
         for(Evenement e : fdb.getAllEvenement(getActivity()))
-            afficherEvenementCalendrier(e);
+            afficherEvenement(e);
 
 
         ImageView iv = getActivity().findViewById(R.id.imageAjouterEnBasADroite);
@@ -81,7 +81,7 @@ public class FragmentListeEvenements extends Fragment {
 
     }
 
-    public void afficherEvenementCalendrier(Evenement eve){
+    public void afficherEvenement(Evenement eve){
 
         LinearLayout parentLayout = getActivity().findViewById(R.id.linearLayoutEvenements);
         View view = LayoutInflater.from(getContext()).inflate(R.layout.liste_evenement_evenement, parentLayout, false);
@@ -270,10 +270,6 @@ public class FragmentListeEvenements extends Fragment {
         String day = (Integer.parseInt(daySpinner.getSelectedItem().toString()) >9)? daySpinner.getSelectedItem().toString() : "0"+daySpinner.getSelectedItem().toString();
         String month =(Integer.parseInt(monthSpinner.getSelectedItem().toString()) >9)? monthSpinner.getSelectedItem().toString() : "0"+monthSpinner.getSelectedItem().toString();
         String year = yearSpinner.getSelectedItem().toString();
-
-        System.out.println((day));
-        System.out.println((month));
-        System.out.println((year));
 
         // Concaténation des valeurs pour former la chaîne de date
         String dateString =  day + "/" + month + "/" + year;

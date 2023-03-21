@@ -2,22 +2,32 @@ package com.example.taskmanagement;
 
 import android.app.Activity;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.util.DisplayMetrics;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
 import android.widget.CalendarView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import org.eazegraph.lib.charts.PieChart;
 import org.eazegraph.lib.models.PieModel;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 
@@ -81,22 +91,44 @@ public class FragmentAccueil extends Fragment {
                 View vuePieChart = LayoutInflater.from(getActivity()).inflate(R.layout.accueil_graphique_circulaire,horizontalLayout, false);
 
                 PieChart chart = vuePieChart.findViewById(R.id.pieGraph);
-                int g2 = 35;
-                int g3 = 65;
+                int tachesTerminees = fdb.showTypeEventValideTrue(getActivity(),t.type).size();
+                int nombreDeTache = fdb.showTypeEvent(getActivity(),t.type).size();
 
                 
                 //rempli de la couleur du type
-                chart.addPieSlice(new PieModel("a", g2, Color.parseColor(fdb.getColorOfOneType(getActivity(),t.type))));
-                chart.addPieSlice(new PieModel("tous", g3, Color.parseColor("#DDDDDD")));
+                chart.addPieSlice(new PieModel("Tâches Terminees", tachesTerminees, Color.parseColor(fdb.getColorOfOneType(getActivity(),t.type))));
+                chart.addPieSlice(new PieModel("Nombre de tâche", nombreDeTache-tachesTerminees, Color.parseColor("#DDDDDD")));
                 chart.startAnimation();
 
                 TextView titreTV = vuePieChart.findViewById(R.id.accueilTitrePieChart);
-                titreTV.setText(t.type);            // TODO rajouter le nombre de validé
+                titreTV.setText(t.type +  " " + tachesTerminees + "/" + nombreDeTache);
+
+
+                //lui ajoute un onClick listener pour voir tous les evenements de ce type
+
+                vuePieChart.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        afficherPopUpEvenements(getView(), t);
+
+                    }
+                }
+
+            );
+
+
+
+
+
 
 
                 horizontalLayout.addView(vuePieChart);
                 i++;
             }
+
+
+
+
 
 
 
@@ -109,44 +141,109 @@ public class FragmentAccueil extends Fragment {
 
     }
 
-    //on utilise onCreateView et non onViewCreated, car si on est deja sur l accueil et on rappuie sur le bouton accueil
-    //le graphique ne se re affichera pas
+
+
+
+    public void afficherPopUpEvenements(View view, Types typeuh){
+
+        PopupWindow popup = new PopupWindow(view, view.getLayoutParams().WRAP_CONTENT,  view.getLayoutParams().WRAP_CONTENT, true);
+
+        View popupView = getLayoutInflater().inflate(R.layout.popup_liste_evenements, null);
+        popup.setContentView(popupView);
+
+        popup.setContentView(popupView);
+
+        //obtenir la taille de l'écran
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        getActivity().getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        int screenWidth = displayMetrics.widthPixels;
+        int screenHeight = displayMetrics.heightPixels;
+
+        //la popup est un peu eloigné des bords de l'écran
+        popup.setWidth((int) (screenWidth * 0.9));
+        popup.setHeight((int) (screenHeight * 0.9));
+
+
+        //sinon on voit la delimitation de la popup
+        popup.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        popup.showAtLocation(view, Gravity.CENTER, 0, 0);
+
+        //pour finir une petite animation d'apparition
+        Animation fadeInAnimation = new AlphaAnimation(0.0f, 1.0f);
+        fadeInAnimation.setDuration(500);
+        popupView.startAnimation(fadeInAnimation);
+
+        for(Evenement eve : fdb.getAllEvenement(getActivity())){
+            System.out.print(typeuh.type + " " + eve.type);
+            if(eve.type.equals(typeuh.type))
+                ajouterEvenementDansPopup(popupView,eve);
+        }
+
+
+    }
+
+    public void ajouterEvenementDansPopup(View view, Evenement eve){
+
+        LinearLayout parentLayout = view.findViewById(R.id.linearLayoutPopupAccueil);
+        View vieweuh = LayoutInflater.from(getContext()).inflate(R.layout.evenements_cochable, parentLayout, false);
+
+
+
+            TextView tv = vieweuh.findViewById(R.id.evenementNom);
+            tv.setText(eve.nom);
+
+            //change de couleur de fond pour avoir celui du type
+            Drawable backgroundDrawableTV = tv.getBackground();
+            backgroundDrawableTV.setColorFilter(Color.parseColor(fdb.getColorOfOneType(getActivity(), eve.type)), PorterDuff.Mode.SRC_ATOP);
+
+
+            //je recupere l image et lui affecte un un on click effect mais aussi l image associé a si on a validé ou non
+            ImageView iv = vieweuh.findViewById(R.id.evenementValide); //modifier cette ligne
+            iv.setImageResource((eve.valide) ? R.drawable.tache_faite : R.drawable.tache_pas_faite);
+            iv.setId(eve.id);
+            iv.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    fdb.alterValideEvenement(getActivity(), eve.id, (eve.valide) ? 0 : 1);                             //modifie la valeur de valide dans la db
+                    iv.setImageResource((eve.valide) ? R.drawable.tache_pas_faite : R.drawable.tache_faite);       //modifie l'image a chaque clique
+                    eve.valide = (eve.valide) ? false : true;                                                       //modifie la valeur de valide de l'evenement
+
+
+                }
+            });
+
+            //meme couleur de fond
+            Drawable backgroundDrawableIV = iv.getBackground();
+            backgroundDrawableIV.setColorFilter(Color.parseColor(fdb.getColorOfOneType(getActivity(), eve.type)), PorterDuff.Mode.SRC_ATOP);
+            parentLayout.addView(vieweuh);
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         View rootView =  inflater.inflate(R.layout.fragment_accueil, container, false);
 
-        //LinearLayout linearLayoutVertical = getActivity().findViewById(R.id.linearLayoutAccueilVertical);
-        //LinearLayout linearLayoutHorizontal = getActivity().findViewById(R.id.linearLayoutAccueilHorizontale);
-        //exemple de comment utiliser les graphiques
-
-        //View linearPieChart =  LayoutInflater.from(getActivity()).inflate(R.layout.accueil_graphique_circulaire, linearLayoutHorizontal, false);
-
-       /// linearLayoutHorizontal.addView(linearPieChart);
-
-
-        /*
-
-        if(fdb.getAllTypes(getActivity()).size() != 0 ) {
-
-            PieChart chart = rootView.findViewById(R.id.pieGraph);
-
-
-            for(Types t : fdb.getAllTypes(getActivity())) {
-
-               // PieChart chart = rootView.findViewById(R.id.pieGraph);
-
-                int g2 = 35;
-                int g3 = 50;
-
-                chart.addPieSlice(new PieModel("a", g2, Color.parseColor("#FF0000")));
-                chart.addPieSlice(new PieModel("tous", g3, Color.parseColor("#0000FF")));
-
-                chart.startAnimation();
-            }
-        }
-*/
         return rootView;
 
     }

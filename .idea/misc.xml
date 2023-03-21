@@ -23,6 +23,7 @@
         <entry key="..\:/Users/esteb/projet-android-m1/Appli-android-M1/app/src/main/res/layout/calendrier.xml" value="0.25" />
         <entry key="..\:/Users/esteb/projet-android-m1/Appli-android-M1/app/src/main/res/layout/calendrier_evenements.xml" value="0.33" />
         <entry key="..\:/Users/esteb/projet-android-m1/Appli-android-M1/app/src/main/res/layout/enregistrer_types.xml" value="0.3625" />
+        <entry key="..\:/Users/esteb/projet-android-m1/Appli-android-M1/app/src/main/res/layout/evenements_cochable.xml" value="0.3625" />
         <entry key="..\:/Users/esteb/projet-android-m1/Appli-android-M1/app/src/main/res/layout/fragment_accueil.xml" value="0.2265625" />
         <entry key="..\:/Users/esteb/projet-android-m1/Appli-android-M1/app/src/main/res/layout/fragment_barre_des_taches.xml" value="0.1" />
         <entry key="..\:/Users/esteb/projet-android-m1/Appli-android-M1/app/src/main/res/layout/fragment_barre_des_taches1.xml" value="0.18541666666666667" />
@@ -40,6 +41,7 @@
         <entry key="..\:/Users/esteb/projet-android-m1/Appli-android-M1/app/src/main/res/layout/menu_liste_types_parent.xml" value="0.3625" />
         <entry key="..\:/Users/esteb/projet-android-m1/Appli-android-M1/app/src/main/res/layout/popup_enregisrer_evenements.xml" value="0.33" />
         <entry key="..\:/Users/esteb/projet-android-m1/Appli-android-M1/app/src/main/res/layout/popup_enregistrer_types.xml" value="0.16" />
+        <entry key="..\:/Users/esteb/projet-android-m1/Appli-android-M1/app/src/main/res/layout/popup_liste_evenements.xml" value="0.3625" />
         <entry key="..\:/Users/esteb/projet-android-m1/Appli-android-M1/app/src/main/res/layout/toutes_les_fenetres.xml" value="0.18" />
         <entry key="..\:/Users/esteb/projet-android-m1/Appli-android-M1/app/src/main/res/menu/barre_des_taches.xml" value="0.3625" />
         <entry key="..\:/Users/esteb/projet-android-m1/app/src/main/res/layout/activity_main.xml" value="0.3484375" />

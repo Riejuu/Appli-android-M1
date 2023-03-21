@@ -47,4 +47,5 @@ dependencies {
 
     implementation 'androidx.sqlite:sqlite:2.2.0'   //base de données
 
+
 }

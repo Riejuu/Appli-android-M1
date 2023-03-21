@@ -246,7 +246,53 @@ public class FonctionsDatabase {
         return listeEvenements;
     }
 
+    public ArrayList<Evenement> showTypeEventValideTrue(Activity a, String _type){
+        Database dbHelper = new Database(a);
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
 
+        String[] projection = {
+                EvenementEntry.COLUMN_ID,
+                EvenementEntry.COLUMN_NOM,
+                EvenementEntry.COLUMN_TYPE,
+                EvenementEntry.COLUMN_ANNEE,
+                EvenementEntry.COLUMN_MOIS,
+                EvenementEntry.COLUMN_JOUR,
+                EvenementEntry.COLUMN_VALIDE
+        };
+
+        String selection = EvenementEntry.COLUMN_TYPE + " = ? AND " + EvenementEntry.COLUMN_VALIDE + " = ?";
+        String[] arguments = {_type, "1"};
+
+        Cursor cursor = db.query(
+                EvenementEntry.TABLE_NAME,
+                projection,
+                selection,
+                arguments,
+                null,
+                null,
+                null
+        );
+
+        ArrayList<Evenement> listeEvenements = new ArrayList<>();
+
+
+        while (cursor.moveToNext()) {
+            // public Evenement(int _id, String _nom, String _type, int _annee, int _mois, int _jour, boolean _valide)
+            Evenement osef = new Evenement(
+                    cursor.getInt(cursor.getColumnIndexOrThrow(EvenementEntry.COLUMN_ID)),
+                    cursor.getString(cursor.getColumnIndexOrThrow(EvenementEntry.COLUMN_NOM)),
+                    cursor.getString(cursor.getColumnIndexOrThrow(EvenementEntry.COLUMN_TYPE)),
+                    cursor.getInt(cursor.getColumnIndexOrThrow(EvenementEntry.COLUMN_ANNEE)),
+                    cursor.getInt(cursor.getColumnIndexOrThrow(EvenementEntry.COLUMN_MOIS)),
+                    cursor.getInt(cursor.getColumnIndexOrThrow(EvenementEntry.COLUMN_JOUR)),
+                    cursor.getInt(cursor.getColumnIndexOrThrow(EvenementEntry.COLUMN_VALIDE)) == 1? true : false);
+
+            listeEvenements.add(osef);
+        }
+        cursor.close();
+        db.close();
+        return listeEvenements;
+    }
 
     //modifie valide d'un evenement
     public void alterValideEvenement(Activity a, int id, int nouvelleValeur){

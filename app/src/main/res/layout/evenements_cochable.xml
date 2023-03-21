@@ -41,7 +41,7 @@
 
             <ImageView
                 android:id="@+id/evenementValide"
-                android:layout_width="51dp"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="centerInside"
                 android:src="@drawable/tache_pas_faite"
