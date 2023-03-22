@@ -26,4 +26,11 @@
     </LinearLayout>
 
     </ScrollView>
+    <Button
+        android:id="@+id/boutonPopupListeEvenements"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/fermer"
+        android:backgroundTint="@color/red"
+        android:layout_gravity="bottom"/>
 </FrameLayout>

@@ -18,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
+import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -178,6 +179,10 @@ public class FragmentAccueil extends Fragment {
             if(eve.type.equals(typeuh.type))
                 ajouterEvenementDansPopup(popupView,eve);
         }
+
+        Button bFermer = popupView.findViewById(R.id.boutonPopupListeEvenements);
+
+        bFermer.setOnClickListener(osef-> popup.dismiss());
 
 
     }
