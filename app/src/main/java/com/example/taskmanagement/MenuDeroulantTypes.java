@@ -144,8 +144,8 @@ public class MenuDeroulantTypes extends BaseExpandableListAdapter {
             public void onClick(View v) {
                 Log.d("JE SUIS ICI", "dans le onclick");
                 Log.d("JE SUIS ICI",childTextView.getText() + String.valueOf(tmp.getId()));
-                
-                afficherPopUpModifierEvenements(tmp);
+
+                afficherPopUpModifierEvenements(tmp, fdb.getEvenementById(activity, tmp.getId()));
 
                 Log.d("JE SUIS ICI", "en dehors du onclick");
             }
@@ -165,7 +165,7 @@ public class MenuDeroulantTypes extends BaseExpandableListAdapter {
 
 
 
-    public void afficherPopUpModifierEvenements(View view) {
+    public void afficherPopUpModifierEvenements(View view, Evenement eve) {
 
         // Initialiser LayoutInflater et créer une vue de popup personnalisée
         if (layoutInflater == null) {
@@ -220,9 +220,9 @@ public class MenuDeroulantTypes extends BaseExpandableListAdapter {
 
 
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(popupView.getContext(), android.R.layout.simple_spinner_item, listeType);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        typeSpinner.setAdapter(adapter);
+        ArrayAdapter<String> typeAdapter = new ArrayAdapter<String>(popupView.getContext(), android.R.layout.simple_spinner_item, listeType);
+        typeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        typeSpinner.setAdapter(typeAdapter);
 
 
 
@@ -252,44 +252,47 @@ public class MenuDeroulantTypes extends BaseExpandableListAdapter {
 
 
 
+        ArrayAdapter<String> anneesAdapter = new ArrayAdapter<String>(popupView.getContext(), android.R.layout.simple_spinner_item, listeAnnees);
+        anneesAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        anneeSpinner.setAdapter(anneesAdapter);
 
-        adapter = new ArrayAdapter<String>(popupView.getContext(), android.R.layout.simple_spinner_item, listeAnnees);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        anneeSpinner.setAdapter(adapter);
+        ArrayAdapter<String> moisAdapter = new ArrayAdapter<String>(popupView.getContext(), android.R.layout.simple_spinner_item, listeMois);
+        moisAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        moisSpinner.setAdapter(moisAdapter);
 
-        adapter = new ArrayAdapter<String>(popupView.getContext(), android.R.layout.simple_spinner_item, listeMois);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        moisSpinner.setAdapter(adapter);
+        ArrayAdapter<String> jourAdapter = new ArrayAdapter<String>(popupView.getContext(), android.R.layout.simple_spinner_item, listeJours);
+        jourAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        jourSpinner.setAdapter(jourAdapter);
 
-        adapter = new ArrayAdapter<String>(popupView.getContext(), android.R.layout.simple_spinner_item, listeJours);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        jourSpinner.setAdapter(adapter);
+
+        EditText nom = popupView.findViewById(R.id.evenementNom);
+
+
+        nom.setText(eve.nom);
+        typeSpinner.setSelection(typeAdapter.getPosition(eve.type));
+        anneeSpinner.setSelection(anneesAdapter.getPosition(String.valueOf(eve.annee)));
+        moisSpinner.setSelection(moisAdapter.getPosition(String.valueOf(eve.mois)));
+        jourSpinner.setSelection(jourAdapter.getPosition(String.valueOf(eve.jour)));
+
 
 
 
         //et pour finir les boutons enregistrer et fermer
 
-
         Button bEnregistrer = popupView.findViewById(R.id.boutonPopupEnregistrementOuModificationEvenement);
 
         bEnregistrer.setOnClickListener(osef -> {
 
-            EditText nom = popupView.findViewById(R.id.evenementNom);
-            /*Spinner typeSpinner = popupView.findViewById(R.id.evenementType);
-            Spinner anneeSpinner = popupView.findViewById(R.id.evenementAnnee);
-            Spinner moisSpinner = popupView.findViewById(R.id.evenementMois);
-            Spinner jourSpinner = popupView.findViewById(R.id.evenementJour);
-            */
-
-
             if(!TextUtils.isEmpty(nom.getText().toString().trim()) && dateValide(jourSpinner, moisSpinner, anneeSpinner) && !(typeSpinner.getSelectedItem() == null)){
 
                 //on ajoute a la db
-                fdb.addEvenement(activity,nom.getText().toString(), typeSpinner.getSelectedItem().toString(),
+                fdb.alterEvenementFromId(activity,
+                        eve.id,
+                        nom.getText().toString(),
+                        typeSpinner.getSelectedItem().toString(),
                         Integer.parseInt(anneeSpinner.getSelectedItem().toString()),
                         Integer.parseInt(moisSpinner.getSelectedItem().toString()),
-                        Integer.parseInt(jourSpinner.getSelectedItem().toString()),
-                        0);
+                        Integer.parseInt(jourSpinner.getSelectedItem().toString()));
 
                 popup.dismiss();
             }else{

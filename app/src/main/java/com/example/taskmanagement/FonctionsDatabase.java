@@ -96,6 +96,7 @@ public class FonctionsDatabase {
         db.close();
     }
 
+    //recupere tous les evenements
     public ArrayList<Evenement> getAllEvenement(Activity a){
 
 
@@ -142,7 +143,6 @@ public class FonctionsDatabase {
         return listeEvenements;
 
     }
-
 
     //récupère tous les evenements de la journée, et renvoie en ArrayList
     public ArrayList<Evenement> showDaysEvent(Activity a, int _annee, int _mois, int _jour){
@@ -306,8 +306,70 @@ public class FonctionsDatabase {
 
     }
 
+    //récupère l'evenement situé à l'id
+    public Evenement getEvenementById(Activity a, int eventId){
+        Database dbHelper = new Database(a);
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+
+        String[] projection = {
+                EvenementEntry.COLUMN_ID,
+                EvenementEntry.COLUMN_NOM,
+                EvenementEntry.COLUMN_TYPE,
+                EvenementEntry.COLUMN_ANNEE,
+                EvenementEntry.COLUMN_MOIS,
+                EvenementEntry.COLUMN_JOUR,
+                EvenementEntry.COLUMN_VALIDE
+        };
+
+        String selection = EvenementEntry.COLUMN_ID + " = ?";
+        String[] arguments = {String.valueOf(eventId)};
+
+        Cursor cursor = db.query(
+                EvenementEntry.TABLE_NAME,
+                projection,
+                selection,
+                arguments,
+                null,
+                null,
+                null
+        );
+
+        Evenement evenement = null;
+
+        if(cursor.moveToFirst()){
+            evenement = new Evenement(
+                    cursor.getInt(cursor.getColumnIndexOrThrow(EvenementEntry.COLUMN_ID)),
+                    cursor.getString(cursor.getColumnIndexOrThrow(EvenementEntry.COLUMN_NOM)),
+                    cursor.getString(cursor.getColumnIndexOrThrow(EvenementEntry.COLUMN_TYPE)),
+                    cursor.getInt(cursor.getColumnIndexOrThrow(EvenementEntry.COLUMN_ANNEE)),
+                    cursor.getInt(cursor.getColumnIndexOrThrow(EvenementEntry.COLUMN_MOIS)),
+                    cursor.getInt(cursor.getColumnIndexOrThrow(EvenementEntry.COLUMN_JOUR)),
+                    cursor.getInt(cursor.getColumnIndexOrThrow(EvenementEntry.COLUMN_VALIDE)) == 1
+            );
+        }
+
+        cursor.close();
+        db.close();
+
+        return evenement;
+    }
 
 
+    //modifie l'evenement situé a l id
+    public void alterEvenementFromId(Activity a, int id, String nom, String type, int annee, int mois, int jour) {
+
+        Database dbHelper = new Database(a);
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("nom", nom);
+        values.put("type", type);
+        values.put("annee", annee);
+        values.put("mois", mois);
+        values.put("jour", jour);
+        db.update("evenement", values, "id = ?", new String[]{String.valueOf(id)});
+        db.close();
+
+    }
 
     //efface un evenement selon son id
     public void deleteEvenement(Activity a, int id) {
