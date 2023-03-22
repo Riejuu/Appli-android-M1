@@ -74,16 +74,16 @@ public class FragmentListeTypes extends Fragment {
         expListView.removeAllViewsInLayout();       //remove au cas ou on reclique dessus
 
         List<String> typeListe = new ArrayList<>();
-        Map<String, List<String>> dictionnaire = new HashMap<>();
+        Map<String, List<Evenement>> dictionnaire = new HashMap<>();
 
 
         //pour cela on doit lister les parents et les enfant
         for (Types t : fdb.getAllTypes(getActivity())) {
-            List<String> tachesListe = new ArrayList<>();
+            List<Evenement> tachesListe = new ArrayList<>();
             typeListe.add(t.type);
 
             for(Evenement e : fdb.showTypeEvent(getActivity(), t.type))
-                tachesListe.add(e.nom);
+                tachesListe.add(e);
 
             dictionnaire.put(t.type,tachesListe);
         }

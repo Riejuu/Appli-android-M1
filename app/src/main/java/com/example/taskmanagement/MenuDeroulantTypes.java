@@ -4,16 +4,32 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
+import android.text.TextUtils;
+import android.util.DisplayMetrics;
+import android.util.Log;
 import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.widget.ArrayAdapter;
 import android.widget.BaseExpandableListAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
+import android.widget.Spinner;
 import android.widget.TextView;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -22,14 +38,20 @@ public class MenuDeroulantTypes extends BaseExpandableListAdapter {
 
     public Context context;
     public List<String> typeListe;
-    public Map<String, List<String>> dictionnaire;
+    public Map<String, List<Evenement>> dictionnaire;
+
+
 
     FonctionsDatabase fdb = new FonctionsDatabase();
 
     //rajout de l activity pour pouvoir recuperer l activité des types
     public Activity activity ;
 
-    public MenuDeroulantTypes(Context context, List<String> typeListe, Map<String, List<String>> dictionnaire,Activity activity) {
+    //besoin de ceci pour la popup view fille
+    private LayoutInflater layoutInflater;
+    private PopupWindow popup;
+
+    public MenuDeroulantTypes(Context context, List<String> typeListe, Map<String, List<Evenement>> dictionnaire,Activity activity) {
         this.context = context;
         this.typeListe = typeListe;
         this.dictionnaire = dictionnaire;
@@ -44,7 +66,7 @@ public class MenuDeroulantTypes extends BaseExpandableListAdapter {
     @Override
     public int getChildrenCount(int groupPosition) {
         String type = typeListe.get(groupPosition);
-        List<String> tachesListe = dictionnaire.get(type);
+        List<Evenement> tachesListe = dictionnaire.get(type);
         return tachesListe.size();
     }
 
@@ -54,9 +76,9 @@ public class MenuDeroulantTypes extends BaseExpandableListAdapter {
     }
 
     @Override
-    public Object getChild(int groupPosition, int childPosition) {
+    public Evenement getChild(int groupPosition, int childPosition) {
         String type = typeListe.get(groupPosition);
-        List<String> tachesListe = dictionnaire.get(type);
+        List<Evenement> tachesListe = dictionnaire.get(type);
         return tachesListe.get(childPosition);
     }
 
@@ -106,11 +128,28 @@ public class MenuDeroulantTypes extends BaseExpandableListAdapter {
         }
 
 
-        String childItem = (String) getChild(groupPosition, childPosition);
+        String childItem = getChild(groupPosition, childPosition).nom;
 
         // On met à jour la vue avec les données de l'élément enfant
         TextView childTextView = convertView.findViewById(R.id.itemFille);
         childTextView.setText(childItem);
+
+        //on set l'id, sera utile pour récuperer l'event dans une base de données
+        convertView.setId(getChild(groupPosition, childPosition).id);
+
+
+        View tmp = convertView;
+        convertView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d("JE SUIS ICI", "dans le onclick");
+                Log.d("JE SUIS ICI",childTextView.getText() + String.valueOf(tmp.getId()));
+                
+                afficherPopUpModifierEvenements(tmp);
+
+                Log.d("JE SUIS ICI", "en dehors du onclick");
+            }
+        });
 
         return convertView;
     }
@@ -120,7 +159,213 @@ public class MenuDeroulantTypes extends BaseExpandableListAdapter {
     public boolean isChildSelectable(int groupPosition, int childPosition) {
         return true;
     }
+
+
+
+
+
+
+    public void afficherPopUpModifierEvenements(View view) {
+
+        // Initialiser LayoutInflater et créer une vue de popup personnalisée
+        if (layoutInflater == null) {
+            layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        }
+        View popupView = layoutInflater.inflate(R.layout.popup_enregisrer_et_modifier_evenements, null);
+
+        // Créer une popup
+        popup = new PopupWindow(popupView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
+
+
+        //obtenir la taille de l'écran
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        activity.getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        int screenWidth = displayMetrics.widthPixels;
+        int screenHeight = displayMetrics.heightPixels;
+
+        //la popup est un peu eloigné des bords de l'écran
+        popup.setWidth((int) (screenWidth * 0.9));
+        popup.setHeight((int) (screenHeight * 0.9));
+
+
+        // Rendre la popup transparente
+        popup.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        // Afficher la popup
+        popup.showAtLocation(view, Gravity.CENTER, 0, 0);
+
+        // Définir l'animation de la popup
+        AlphaAnimation alphaAnimation = new AlphaAnimation(0.0f, 1.0f);
+        alphaAnimation.setDuration(300);
+        popupView.startAnimation(alphaAnimation);
+
+
+
+
+        //maintenant on setup les editTexts et spinner puis on leur donne par défaut la valeur de l'item
+
+
+        //spinner du type
+        Spinner typeSpinner = popupView.findViewById(R.id.evenementType);
+
+        //je dois utiliser une liste classique pour les spinner donc je change l array en liste normale
+
+        ArrayList<String> listeTypeArray = new ArrayList<>();
+
+        for(Types t : fdb.getAllTypes(activity)){
+            listeTypeArray.add(t.type);
+        }
+
+        String[] listeType = listeTypeArray.toArray(new String[0]);
+
+
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(popupView.getContext(), android.R.layout.simple_spinner_item, listeType);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        typeSpinner.setAdapter(adapter);
+
+
+
+        //les spinner de la date
+        Spinner anneeSpinner = popupView.findViewById(R.id.evenementAnnee);
+        Spinner moisSpinner = popupView.findViewById(R.id.evenementMois);
+        Spinner jourSpinner = popupView.findViewById(R.id.evenementJour);
+
+
+        //on les initialises
+        String[] listeAnnees = new String[130];
+        for (int i = 0; i < 130; i++) {
+            listeAnnees[i] = String.valueOf(i+1970);  //pour les années 1970 a 2099, peut etre que ca peut etre utile a certain de note des evenements passer comme pense bete
+        }
+
+
+        String[] listeMois = new String[12];
+        for (int i = 0; i < 12; i++) {
+            listeMois[i] = String.valueOf(i+1);  //pour les mois
+        }
+
+
+        String[] listeJours = new String[31];
+        for (int i = 0; i < 31; i++) {
+            listeJours[i] = String.valueOf(i+1);  //pour les jours (on verifie si c est possible dans le bouton enregistrer)
+        }
+
+
+
+
+        adapter = new ArrayAdapter<String>(popupView.getContext(), android.R.layout.simple_spinner_item, listeAnnees);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        anneeSpinner.setAdapter(adapter);
+
+        adapter = new ArrayAdapter<String>(popupView.getContext(), android.R.layout.simple_spinner_item, listeMois);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        moisSpinner.setAdapter(adapter);
+
+        adapter = new ArrayAdapter<String>(popupView.getContext(), android.R.layout.simple_spinner_item, listeJours);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        jourSpinner.setAdapter(adapter);
+
+
+
+        //et pour finir les boutons enregistrer et fermer
+
+
+        Button bEnregistrer = popupView.findViewById(R.id.boutonPopupEnregistrementOuModificationEvenement);
+
+        bEnregistrer.setOnClickListener(osef -> {
+
+            EditText nom = popupView.findViewById(R.id.evenementNom);
+            /*Spinner typeSpinner = popupView.findViewById(R.id.evenementType);
+            Spinner anneeSpinner = popupView.findViewById(R.id.evenementAnnee);
+            Spinner moisSpinner = popupView.findViewById(R.id.evenementMois);
+            Spinner jourSpinner = popupView.findViewById(R.id.evenementJour);
+            */
+
+
+            if(!TextUtils.isEmpty(nom.getText().toString().trim()) && dateValide(jourSpinner, moisSpinner, anneeSpinner) && !(typeSpinner.getSelectedItem() == null)){
+
+                //on ajoute a la db
+                fdb.addEvenement(activity,nom.getText().toString(), typeSpinner.getSelectedItem().toString(),
+                        Integer.parseInt(anneeSpinner.getSelectedItem().toString()),
+                        Integer.parseInt(moisSpinner.getSelectedItem().toString()),
+                        Integer.parseInt(jourSpinner.getSelectedItem().toString()),
+                        0);
+
+                popup.dismiss();
+            }else{
+
+
+
+                if(TextUtils.isEmpty(nom.getText().toString().trim()) ){
+                    TextView tvType = popupView.findViewById(R.id.nouveauEvenementNomTV);
+                    tvType.setTextColor(Color.RED);
+                }
+
+
+                //ce if est utile uniquement dans le cas ou on vient d installer l appli et que nous avons aucun type d enregistré pour le moment
+                if(typeSpinner.getSelectedItem() == null){
+                    TextView tvType = popupView.findViewById(R.id.nouveauEvenementTypeTV);
+                    tvType.setTextColor(Color.RED);
+                }
+
+                if(!dateValide(jourSpinner, moisSpinner, anneeSpinner)){
+                    TextView tvType = popupView.findViewById(R.id.nouveauEvenementDateTV);
+                    tvType.setTextColor(Color.RED);
+                }
+
+
+            }
+
+
+
+        });
+
+        Button bFermer = popupView.findViewById(R.id.boutonPopupFermerEvenement);
+
+        bFermer.setOnClickListener(osef-> popup.dismiss());
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    }
+
+    public boolean dateValide(Spinner daySpinner, Spinner monthSpinner, Spinner yearSpinner) {
+        // Récupération des valeurs sélectionnées dans les Spinners
+
+        //si les mois sont inferieur a 10 alors on rajoute un 0, exemple 9 -> 09
+        String day = (Integer.parseInt(daySpinner.getSelectedItem().toString()) >9)? daySpinner.getSelectedItem().toString() : "0"+daySpinner.getSelectedItem().toString();
+        String month =(Integer.parseInt(monthSpinner.getSelectedItem().toString()) >9)? monthSpinner.getSelectedItem().toString() : "0"+monthSpinner.getSelectedItem().toString();
+        String year = yearSpinner.getSelectedItem().toString();
+
+        // Concaténation des valeurs pour former la chaîne de date
+        String dateString =  day + "/" + month + "/" + year;
+
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        sdf.setLenient(false);
+
+        try {
+            Date date = sdf.parse(dateString);
+            return true;
+        } catch (ParseException e) {
+            // Si la conversion échoue, la date n'est pas valide
+            return false;
+        }
+    }
+
+
+
+
+
+
 }
-
-
-

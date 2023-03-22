@@ -1,16 +1,13 @@
 package com.example.taskmanagement;
 
-import android.app.Activity;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 
 import android.text.TextUtils;
@@ -30,14 +27,9 @@ import android.widget.PopupWindow;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import java.lang.reflect.Type;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 
 public class FragmentListeEvenements extends Fragment {
@@ -75,7 +67,7 @@ public class FragmentListeEvenements extends Fragment {
         iv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                afficherPopUpEvenements(getView());
+                afficherPopUpAjouterEvenements(getView());
             }
         });
 
@@ -97,12 +89,12 @@ public class FragmentListeEvenements extends Fragment {
     }
 
 
-    public void afficherPopUpEvenements(View view) {
+    public void afficherPopUpAjouterEvenements(View view) {
 
         PopupWindow popup = new PopupWindow(view, view.getLayoutParams().WRAP_CONTENT,  view.getLayoutParams().WRAP_CONTENT, true);
 
         //on crée la popup a partir du xml enregistrer_types
-        View popupView = getLayoutInflater().inflate(R.layout.popup_enregisrer_evenements, null);
+        View popupView = getLayoutInflater().inflate(R.layout.popup_enregisrer_et_modifier_evenements, null);
         popup.setContentView(popupView);
 
         //obtenir la taille de l'écran
@@ -200,7 +192,7 @@ public class FragmentListeEvenements extends Fragment {
         //et pour finir les boutons enregistrer et fermer
 
 
-        Button bEnregistrer = popupView.findViewById(R.id.boutonPopupEnregistrementEvenement);
+        Button bEnregistrer = popupView.findViewById(R.id.boutonPopupEnregistrementOuModificationEvenement);
 
         bEnregistrer.setOnClickListener(osef -> {
 

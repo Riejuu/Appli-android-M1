@@ -129,9 +129,9 @@
         android:backgroundTint="@color/red"
         android:layout_gravity="bottom"/>
 
-    <!-- bouton enregistrer type dans la dp-->
+    <!-- bouton enregistrer ou modifier type dans la db-->
     <Button
-        android:id="@+id/boutonPopupEnregistrementEvenement"
+        android:id="@+id/boutonPopupEnregistrementOuModificationEvenement"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/enregistrer"
