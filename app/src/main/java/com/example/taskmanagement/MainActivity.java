@@ -12,86 +12,27 @@ import android.widget.ImageView;
 
 import com.example.taskmanagement.databinding.ActivityMainBinding;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-
 public class MainActivity extends AppCompatActivity {
 
-    //sert pour la barre de navigation
     ActivityMainBinding binding;
-
-
-
+    ViewPager viewPager;
+    BottomNavigationView bottomNavigationView;
+    ImageView imageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());  //content view changé pour avoir la barre des taches fonctionnelle
-        replaceFragment(new FragmentAccueil()); //ce met sur le fragment d'accueil de base
+        setContentView(binding.getRoot());
 
+        imageView = findViewById(R.id.imageAjouterEnBasADroite);
 
-        //set l'image du curseur
-        BottomNavigationView bottomNavigationView = findViewById(R.id.barreDesTaches);
-        int middleItemId = R.id.barreTacheImage3;
-        bottomNavigationView.setSelectedItemId(middleItemId);
+        setupViewPager();
+        setupBottomNavigation();
+    }
 
-
-        //je peux pas le rendre static du coup on va le recreer a chaque fois dans les fragments :(
-        ImageView imageView = findViewById(R.id.imageAjouterEnBasADroite);
-
-        //attribue les pages aux boutons de la barre des taches
-        binding.barreDesTaches.setOnItemSelectedListener(item -> {
-
-            switch (item.getItemId()) {
-                case R.id.barreTacheImage1:
-
-                    // Code pour changer vers la page parametres
-                    imageView.setVisibility(View.INVISIBLE);
-                    replaceFragment(new FragmentParametres());
-                    return true;
-
-
-                case R.id.barreTacheImage2:
-
-
-
-                    // Code pour changer vers la page liste des types
-                    imageView.setVisibility(View.VISIBLE);
-                    replaceFragment(new FragmentListeTypes());
-                    return true;
-
-
-                case R.id.barreTacheImage3:
-
-
-
-                    // Code pour changer vers la page d'accueil
-                    imageView.setVisibility(View.INVISIBLE);
-                    replaceFragment(new FragmentAccueil());
-                    return true;
-
-
-                case R.id.barreTacheImage4:
-
-
-                    // Code pour changer vers la page calendrier
-                    imageView.setVisibility(View.INVISIBLE);
-                    replaceFragment(new FragmentCalendrier());
-                    return true;
-
-
-                case R.id.barreTacheImage5:
-
-
-                    // Code pour changer vers la page liste des evenements
-                    imageView.setVisibility(View.VISIBLE);
-                    replaceFragment(new FragmentListeEvenements());
-                    return true;
-                default:
-                    return false;
-            }
-        });
-
-
+    private void setupViewPager() {
+        viewPager = findViewById(R.id.viewPager);
         MyPagerAdapter pagerAdapter = new MyPagerAdapter(getSupportFragmentManager());
 
         pagerAdapter.addFragment(new FragmentParametres());
@@ -100,23 +41,73 @@ public class MainActivity extends AppCompatActivity {
         pagerAdapter.addFragment(new FragmentCalendrier());
         pagerAdapter.addFragment(new FragmentListeEvenements());
 
-        ViewPager viewPager = findViewById(R.id.viewPager);
         viewPager.setAdapter(pagerAdapter);
 
+        //dit que de base on est sur la page accueil
+        viewPager.setCurrentItem(2);
     }
 
-    private void replaceFragment(Fragment fragment){
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        Fragment existingFragment = fragmentManager.findFragmentById(R.id.frameMainActivity);
+    private void setupBottomNavigation() {
+        bottomNavigationView = findViewById(R.id.barreDesTaches);
 
-        //rajout d une securité, car si on invoque deux fois les fragments, les elements inflaté n'existent plus
-        if (existingFragment == null || !existingFragment.getClass().getName().equals(fragment.getClass().getName())) {
-            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.replace(R.id.frameMainActivity, fragment);
-            fragmentTransaction.commit();
-        }
+        // set la barre de navigation pour etre lié a la nav barre
+        bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
+            switch (item.getItemId()) {
+                case R.id.barreTacheImage1:
+
+                    // Code pour changer vers la page parametres
+                    imageView.setVisibility(View.INVISIBLE);
+                    viewPager.setCurrentItem(0);
+                    return true;
+                case R.id.barreTacheImage2:
+
+                    // Code pour changer vers la page liste des types
+                    imageView.setVisibility(View.VISIBLE);
+                    viewPager.setCurrentItem(1);
+                    return true;
+                case R.id.barreTacheImage3:
+
+                    // Code pour changer vers la page d'accueil
+                    imageView.setVisibility(View.INVISIBLE);
+                    viewPager.setCurrentItem(2);
+                    return true;
+                case R.id.barreTacheImage4:
+
+                    // Code pour changer vers la page calendrier
+                    imageView.setVisibility(View.INVISIBLE);
+                    viewPager.setCurrentItem(3);
+                    return true;
+                case R.id.barreTacheImage5:
+
+                    // Code pour changer vers la page liste des evenements
+                    imageView.setVisibility(View.VISIBLE);
+                    viewPager.setCurrentItem(4);
+                    return true;
+                default:
+                    return false;
+            }
+        });
+
+
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {}
+
+            @Override
+            public void onPageSelected(int position) {
+                bottomNavigationView.getMenu().getItem(position).setChecked(true);
+                if (position == 1 || position == 4) {
+                    imageView.setVisibility(View.VISIBLE);
+                } else {
+                    imageView.setVisibility(View.INVISIBLE);
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {}
+        });
+
     }
-
 
 
 
