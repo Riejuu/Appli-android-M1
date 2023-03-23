@@ -4,7 +4,9 @@ import android.app.Activity;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Color;
 import android.provider.BaseColumns;
+import android.util.Log;
 
 import java.util.ArrayList;
 
@@ -515,7 +517,10 @@ public class FonctionsDatabase {
         cursor.close();
         db.close();
 
-        return couleur;
+        if(couleur.equals(null))
+            return "#DDDDDD";
+        else
+            return couleur;
     }
 
     public void deleteTypes(Activity a,String type) {

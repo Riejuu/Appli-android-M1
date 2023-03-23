@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.viewpager.widget.ViewPager;
 
 import android.os.Bundle;
 import android.view.View;
@@ -89,6 +90,18 @@ public class MainActivity extends AppCompatActivity {
                     return false;
             }
         });
+
+
+        MyPagerAdapter pagerAdapter = new MyPagerAdapter(getSupportFragmentManager());
+
+        pagerAdapter.addFragment(new FragmentParametres());
+        pagerAdapter.addFragment(new FragmentListeTypes());
+        pagerAdapter.addFragment(new FragmentAccueil());
+        pagerAdapter.addFragment(new FragmentCalendrier());
+        pagerAdapter.addFragment(new FragmentListeEvenements());
+
+        ViewPager viewPager = findViewById(R.id.viewPager);
+        viewPager.setAdapter(pagerAdapter);
 
     }
 

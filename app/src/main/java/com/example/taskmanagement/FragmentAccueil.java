@@ -12,6 +12,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -95,7 +96,7 @@ public class FragmentAccueil extends Fragment {
                 int tachesTerminees = fdb.showTypeEventValideTrue(getActivity(),t.type).size();
                 int nombreDeTache = fdb.showTypeEvent(getActivity(),t.type).size();
 
-                
+
                 //rempli de la couleur du type
                 chart.addPieSlice(new PieModel("Tâches Terminees", tachesTerminees, Color.parseColor(fdb.getColorOfOneType(getActivity(),t.type))));
                 chart.addPieSlice(new PieModel("Nombre de tâche", nombreDeTache-tachesTerminees, Color.parseColor("#DDDDDD")));
