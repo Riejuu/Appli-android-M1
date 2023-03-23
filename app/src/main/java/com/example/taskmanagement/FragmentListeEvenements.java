@@ -178,6 +178,7 @@ public class FragmentListeEvenements extends Fragment {
         adapter = new ArrayAdapter<String>(popupView.getContext(), android.R.layout.simple_spinner_item, listeAnnees);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         anneeSpinner.setAdapter(adapter);
+        anneeSpinner.setSelection(adapter.getPosition(String.valueOf(2023)));
 
         adapter = new ArrayAdapter<String>(popupView.getContext(), android.R.layout.simple_spinner_item, listeMois);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
