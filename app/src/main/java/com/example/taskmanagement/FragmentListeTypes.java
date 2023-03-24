@@ -63,9 +63,20 @@ public class FragmentListeTypes extends Fragment {
     }
 
 
+
+
     //quand la vue est affiché
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        afficherType(); //crée la page
+    }
+
+
+
+
+
+
+    public void afficherType(){
 
         //on va créer un expandable list view, c est un dire un menu qui quand on clique dessus affiche autre chose
         //ici un menu de type et quand on clique sur le type, ca affiche les taches associées
@@ -104,10 +115,7 @@ public class FragmentListeTypes extends Fragment {
             }
         });
 
-
-
     }
-
 
     //la popup d'ajout d'un type
     //mis dans une fonction pour aerer le code
@@ -158,9 +166,10 @@ public class FragmentListeTypes extends Fragment {
             //si les deux champs sont remplis (4 vu qu on a 4 barres en soit)
             if(!TextUtils.isEmpty(type.getText().toString().trim()) && !(barreRouge.getProgress() == 0 && barreVerte.getProgress() == 0 && barreBleu.getProgress() == 0) ){
 
-               //ajoute le type et la couleur en hexa (si existe deja, va faire comme si c etait rajouté du point de vu popup mais ne fera rien dans la db)
+                //ajoute le type et la couleur en hexa (si existe deja, va faire comme si c etait rajouté du point de vu popup mais ne fera rien dans la db)
                 fdb.addTypes(getActivity(),type.getText().toString(), String.format("#%06X", (0xFFFFFF & ((ColorDrawable) couleurTextView.getBackground()).getColor())));
                 popup.dismiss();
+                afficherType();         //refresh la page
             }else {
                 //si l edit text est vide, on coloris en rouge pour lui dire
                 if (TextUtils.isEmpty(type.getText().toString().trim())) {

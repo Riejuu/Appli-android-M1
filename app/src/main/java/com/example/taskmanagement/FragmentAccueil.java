@@ -50,9 +50,20 @@ public class FragmentAccueil extends Fragment {
         super.onCreate(savedInstanceState);
     }
 
+
+
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        afficherAccueil();  //crée la page
+    }
+
+
+
+
+
+    public void afficherAccueil(){
 
 
         //on veut mettre des layout vertical a chaque fois que je depasse deux types par ligne, donc on met un linearlayout dans un xml different et le pie pareil
@@ -60,7 +71,7 @@ public class FragmentAccueil extends Fragment {
 
         //donc on get le layout de l acceuil
         LinearLayout linearLayoutVertical = getActivity().findViewById(R.id.linearLayoutAccueilVertical);
-
+        linearLayoutVertical.removeAllViews();
 
 
 
@@ -109,38 +120,20 @@ public class FragmentAccueil extends Fragment {
                 //lui ajoute un onClick listener pour voir tous les evenements de ce type
 
                 vuePieChart.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        afficherPopUpEvenements(getView(), t);
+                                                   @Override
+                                                   public void onClick(View v) {
+                                                       afficherPopUpEvenements(getView(), t);
 
-                    }
-                }
+                                                   }
+                                               }
 
-            );
-
-
-
-
-
-
+                );
 
                 horizontalLayout.addView(vuePieChart);
                 i++;
             }
 
-
-
-
-
-
-
         }
-
-
-
-
-
-
     }
 
 
@@ -183,7 +176,10 @@ public class FragmentAccueil extends Fragment {
 
         Button bFermer = popupView.findViewById(R.id.boutonPopupListeEvenements);
 
-        bFermer.setOnClickListener(osef-> popup.dismiss());
+        bFermer.setOnClickListener(osef-> {
+            popup.dismiss();
+            afficherAccueil();      //refresh la page
+        });
 
 
     }
@@ -195,35 +191,35 @@ public class FragmentAccueil extends Fragment {
 
 
 
-            TextView tv = vieweuh.findViewById(R.id.evenementNom);
-            tv.setText(eve.nom);
+        TextView tv = vieweuh.findViewById(R.id.evenementNom);
+        tv.setText(eve.nom);
 
-            //change de couleur de fond pour avoir celui du type
-            Drawable backgroundDrawableTV = tv.getBackground();
-            backgroundDrawableTV.setColorFilter(Color.parseColor(fdb.getColorOfOneType(getActivity(), eve.type)), PorterDuff.Mode.SRC_ATOP);
-
-
-            //je recupere l image et lui affecte un un on click effect mais aussi l image associé a si on a validé ou non
-            ImageView iv = vieweuh.findViewById(R.id.evenementValide); //modifier cette ligne
-            iv.setImageResource((eve.valide) ? R.drawable.tache_faite : R.drawable.tache_pas_faite);
-            iv.setId(eve.id);
-            iv.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-                    fdb.alterValideEvenement(getActivity(), eve.id, (eve.valide) ? 0 : 1);                             //modifie la valeur de valide dans la db
-                    iv.setImageResource((eve.valide) ? R.drawable.tache_pas_faite : R.drawable.tache_faite);       //modifie l'image a chaque clique
-                    eve.valide = (eve.valide) ? false : true;                                                       //modifie la valeur de valide de l'evenement
+        //change de couleur de fond pour avoir celui du type
+        Drawable backgroundDrawableTV = tv.getBackground();
+        backgroundDrawableTV.setColorFilter(Color.parseColor(fdb.getColorOfOneType(getActivity(), eve.type)), PorterDuff.Mode.SRC_ATOP);
 
 
-                }
-            });
+        //je recupere l image et lui affecte un un on click effect mais aussi l image associé a si on a validé ou non
+        ImageView iv = vieweuh.findViewById(R.id.evenementValide); //modifier cette ligne
+        iv.setImageResource((eve.valide) ? R.drawable.tache_faite : R.drawable.tache_pas_faite);
+        iv.setId(eve.id);
+        iv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
-            //meme couleur de fond
-            Drawable backgroundDrawableIV = iv.getBackground();
-            backgroundDrawableIV.setColorFilter(Color.parseColor(fdb.getColorOfOneType(getActivity(), eve.type)), PorterDuff.Mode.SRC_ATOP);
-            parentLayout.addView(vieweuh);
-        }
+                fdb.alterValideEvenement(getActivity(), eve.id, (eve.valide) ? 0 : 1);                             //modifie la valeur de valide dans la db
+                iv.setImageResource((eve.valide) ? R.drawable.tache_pas_faite : R.drawable.tache_faite);       //modifie l'image a chaque clique
+                eve.valide = (eve.valide) ? false : true;                                                       //modifie la valeur de valide de l'evenement
+
+
+            }
+        });
+
+        //meme couleur de fond
+        Drawable backgroundDrawableIV = iv.getBackground();
+        backgroundDrawableIV.setColorFilter(Color.parseColor(fdb.getColorOfOneType(getActivity(), eve.type)), PorterDuff.Mode.SRC_ATOP);
+        parentLayout.addView(vieweuh);
+    }
 
 
 

@@ -12,6 +12,9 @@ import android.widget.ImageView;
 
 import com.example.taskmanagement.databinding.ActivityMainBinding;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity {
 
     ActivityMainBinding binding;
@@ -29,6 +32,9 @@ public class MainActivity extends AppCompatActivity {
 
         setupViewPager();
         setupBottomNavigation();
+
+        //dit que de base on est sur la page accueil
+        viewPager.setCurrentItem(2);
     }
 
     private void setupViewPager() {
@@ -41,10 +47,10 @@ public class MainActivity extends AppCompatActivity {
         pagerAdapter.addFragment(new FragmentCalendrier());
         pagerAdapter.addFragment(new FragmentListeEvenements());
 
+
         viewPager.setAdapter(pagerAdapter);
 
-        //dit que de base on est sur la page accueil
-        viewPager.setCurrentItem(2);
+
     }
 
     private void setupBottomNavigation() {
