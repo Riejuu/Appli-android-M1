@@ -20,6 +20,7 @@ import android.view.animation.Animation;
 import android.widget.ArrayAdapter;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
@@ -224,75 +225,37 @@ public class MenuDeroulantTypes extends BaseExpandableListAdapter {
         typeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         typeSpinner.setAdapter(typeAdapter);
 
-
-
-        //les spinner de la date
-        Spinner anneeSpinner = popupView.findViewById(R.id.evenementAnnee);
-        Spinner moisSpinner = popupView.findViewById(R.id.evenementMois);
-        Spinner jourSpinner = popupView.findViewById(R.id.evenementJour);
-
-
-        //on les initialises
-        String[] listeAnnees = new String[130];
-        for (int i = 0; i < 130; i++) {
-            listeAnnees[i] = String.valueOf(i+1970);  //pour les années 1970 a 2099, peut etre que ca peut etre utile a certain de note des evenements passer comme pense bete
-        }
-
-
-        String[] listeMois = new String[12];
-        for (int i = 0; i < 12; i++) {
-            listeMois[i] = String.valueOf(i+1);  //pour les mois
-        }
-
-
-        String[] listeJours = new String[31];
-        for (int i = 0; i < 31; i++) {
-            listeJours[i] = String.valueOf(i+1);  //pour les jours (on verifie si c est possible dans le bouton enregistrer)
-        }
-
-
-
-        ArrayAdapter<String> anneesAdapter = new ArrayAdapter<String>(popupView.getContext(), android.R.layout.simple_spinner_item, listeAnnees);
-        anneesAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        anneeSpinner.setAdapter(anneesAdapter);
-
-        ArrayAdapter<String> moisAdapter = new ArrayAdapter<String>(popupView.getContext(), android.R.layout.simple_spinner_item, listeMois);
-        moisAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        moisSpinner.setAdapter(moisAdapter);
-
-        ArrayAdapter<String> jourAdapter = new ArrayAdapter<String>(popupView.getContext(), android.R.layout.simple_spinner_item, listeJours);
-        jourAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        jourSpinner.setAdapter(jourAdapter);
-
+        typeSpinner.setSelection(typeAdapter.getPosition(eve.type));
 
         EditText nom = popupView.findViewById(R.id.evenementNom);
 
 
         nom.setText(eve.nom);
-        typeSpinner.setSelection(typeAdapter.getPosition(eve.type));
-        anneeSpinner.setSelection(anneesAdapter.getPosition(String.valueOf(eve.annee)));
-        moisSpinner.setSelection(moisAdapter.getPosition(String.valueOf(eve.mois)));
-        jourSpinner.setSelection(jourAdapter.getPosition(String.valueOf(eve.jour)));
 
+
+        DatePicker dp = popupView.findViewById(R.id.datePicker);
+        dp.init(eve.annee, eve.mois, eve.jour, null);
+
+        //String date = jour + "/" + mois + "/" + annee;
 
 
 
         //et pour finir les boutons enregistrer et fermer
-
         Button bEnregistrer = popupView.findViewById(R.id.boutonPopupEnregistrementOuModificationEvenement);
 
         bEnregistrer.setOnClickListener(osef -> {
 
-            if(!TextUtils.isEmpty(nom.getText().toString().trim()) && dateValide(jourSpinner, moisSpinner, anneeSpinner) && !(typeSpinner.getSelectedItem() == null)){
+
+            if(!TextUtils.isEmpty(nom.getText().toString().trim()) && !(typeSpinner.getSelectedItem() == null)){
 
                 //on ajoute a la db
                 fdb.alterEvenementFromId(activity,
                         eve.id,
                         nom.getText().toString(),
                         typeSpinner.getSelectedItem().toString(),
-                        Integer.parseInt(anneeSpinner.getSelectedItem().toString()),
-                        Integer.parseInt(moisSpinner.getSelectedItem().toString()),
-                        Integer.parseInt(jourSpinner.getSelectedItem().toString()));
+                        dp.getYear(),
+                        (dp.getMonth() + 1),    // Ajouter 1 car les mois commencent à 0
+                        dp.getDayOfMonth());
 
                 popup.dismiss();
             }else{
@@ -311,10 +274,7 @@ public class MenuDeroulantTypes extends BaseExpandableListAdapter {
                     tvType.setTextColor(Color.RED);
                 }
 
-                if(!dateValide(jourSpinner, moisSpinner, anneeSpinner)){
-                    TextView tvType = popupView.findViewById(R.id.nouveauEvenementDateTV);
-                    tvType.setTextColor(Color.RED);
-                }
+
 
 
             }
@@ -342,33 +302,5 @@ public class MenuDeroulantTypes extends BaseExpandableListAdapter {
 
 
     }
-
-    public boolean dateValide(Spinner daySpinner, Spinner monthSpinner, Spinner yearSpinner) {
-        // Récupération des valeurs sélectionnées dans les Spinners
-
-        //si les mois sont inferieur a 10 alors on rajoute un 0, exemple 9 -> 09
-        String day = (Integer.parseInt(daySpinner.getSelectedItem().toString()) >9)? daySpinner.getSelectedItem().toString() : "0"+daySpinner.getSelectedItem().toString();
-        String month =(Integer.parseInt(monthSpinner.getSelectedItem().toString()) >9)? monthSpinner.getSelectedItem().toString() : "0"+monthSpinner.getSelectedItem().toString();
-        String year = yearSpinner.getSelectedItem().toString();
-
-        // Concaténation des valeurs pour former la chaîne de date
-        String dateString =  day + "/" + month + "/" + year;
-
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-        sdf.setLenient(false);
-
-        try {
-            Date date = sdf.parse(dateString);
-            return true;
-        } catch (ParseException e) {
-            // Si la conversion échoue, la date n'est pas valide
-            return false;
-        }
-    }
-
-
-
-
-
 
 }
