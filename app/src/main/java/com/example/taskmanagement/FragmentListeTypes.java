@@ -28,6 +28,7 @@ import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -170,6 +171,7 @@ public class FragmentListeTypes extends Fragment {
                 fdb.addTypes(getActivity(),type.getText().toString(), String.format("#%06X", (0xFFFFFF & ((ColorDrawable) couleurTextView.getBackground()).getColor())));
                 popup.dismiss();
                 afficherType();         //refresh la page
+                Toast.makeText(getActivity(),"Type créé avec succès", Toast.LENGTH_SHORT).show();
             }else {
                 //si l edit text est vide, on coloris en rouge pour lui dire
                 if (TextUtils.isEmpty(type.getText().toString().trim())) {

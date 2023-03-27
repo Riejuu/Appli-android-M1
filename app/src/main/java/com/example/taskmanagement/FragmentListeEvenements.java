@@ -27,6 +27,7 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -188,6 +189,7 @@ public class FragmentListeEvenements extends Fragment {
                         0);
                 popup.dismiss();
                 afficherEvenement();        //refresh la page
+                Toast.makeText(getActivity(),"Evenement créé avec succès", Toast.LENGTH_SHORT).show();
             }else{
 
 

@@ -26,6 +26,7 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -258,6 +259,7 @@ public class MenuDeroulantTypes extends BaseExpandableListAdapter {
                         dp.getDayOfMonth());
 
                 popup.dismiss();
+                Toast.makeText(activity,"Evenement modifié avec succès", Toast.LENGTH_SHORT).show();
             }else{
 
 
