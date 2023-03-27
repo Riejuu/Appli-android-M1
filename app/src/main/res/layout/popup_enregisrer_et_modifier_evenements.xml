@@ -34,7 +34,7 @@
             android:layout_height="50dp"
             android:textAlignment="center"
             android:textColorHint="@color/grey"
-            android:textColor="@color/white"
+            android:textColor="@color/grey"
             android:inputType="text"
             android:maxLines="1"
             android:background="@drawable/rectangle_arrondi_blanc"
@@ -76,6 +76,8 @@
             android:layout_height="wrap_content"
             android:datePickerMode="spinner"
             android:calendarViewShown="false"
+            android:textColor="@color/grey"
+            android:theme="@style/textDatePickerSpinner"
             android:background="@drawable/rectangle_arrondi_blanc"/>
 
 

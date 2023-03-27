@@ -34,14 +34,13 @@ public class MainActivity extends AppCompatActivity {
         setupBottomNavigation();
 
         //dit que de base on est sur la page accueil
-        viewPager.setCurrentItem(2);
+        viewPager.setCurrentItem(1);
     }
 
     private void setupViewPager() {
         viewPager = findViewById(R.id.viewPager);
         MyPagerAdapter pagerAdapter = new MyPagerAdapter(getSupportFragmentManager());
 
-        pagerAdapter.addFragment(new FragmentParametres());
         pagerAdapter.addFragment(new FragmentListeTypes());
         pagerAdapter.addFragment(new FragmentAccueil());
         pagerAdapter.addFragment(new FragmentCalendrier());
@@ -61,33 +60,27 @@ public class MainActivity extends AppCompatActivity {
             switch (item.getItemId()) {
                 case R.id.barreTacheImage1:
 
-                    // Code pour changer vers la page parametres
-                    imageView.setVisibility(View.INVISIBLE);
+                    // Code pour changer vers la page liste des types
+                    imageView.setVisibility(View.VISIBLE);
                     viewPager.setCurrentItem(0);
                     return true;
                 case R.id.barreTacheImage2:
 
-                    // Code pour changer vers la page liste des types
-                    imageView.setVisibility(View.VISIBLE);
+                    // Code pour changer vers la page d'accueil
+                    imageView.setVisibility(View.INVISIBLE);
                     viewPager.setCurrentItem(1);
                     return true;
                 case R.id.barreTacheImage3:
 
-                    // Code pour changer vers la page d'accueil
+                    // Code pour changer vers la page calendrier
                     imageView.setVisibility(View.INVISIBLE);
                     viewPager.setCurrentItem(2);
                     return true;
                 case R.id.barreTacheImage4:
 
-                    // Code pour changer vers la page calendrier
-                    imageView.setVisibility(View.INVISIBLE);
-                    viewPager.setCurrentItem(3);
-                    return true;
-                case R.id.barreTacheImage5:
-
                     // Code pour changer vers la page liste des evenements
                     imageView.setVisibility(View.VISIBLE);
-                    viewPager.setCurrentItem(4);
+                    viewPager.setCurrentItem(3);
                     return true;
                 default:
                     return false;
@@ -102,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onPageSelected(int position) {
                 bottomNavigationView.getMenu().getItem(position).setChecked(true);
-                if (position == 1 || position == 4) {
+                if (position == 0 || position == 3) {
                     imageView.setVisibility(View.VISIBLE);
                 } else {
                     imageView.setVisibility(View.INVISIBLE);
