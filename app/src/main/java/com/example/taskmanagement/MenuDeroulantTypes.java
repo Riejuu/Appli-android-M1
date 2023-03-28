@@ -1,6 +1,7 @@
 package com.example.taskmanagement;
 
 import android.app.Activity;
+import android.app.Fragment;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
@@ -22,6 +23,8 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ExpandableListAdapter;
+import android.widget.ExpandableListView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.Spinner;
@@ -53,11 +56,17 @@ public class MenuDeroulantTypes extends BaseExpandableListAdapter {
     private LayoutInflater layoutInflater;
     private PopupWindow popup;
 
-    public MenuDeroulantTypes(Context context, List<String> typeListe, Map<String, List<Evenement>> dictionnaire,Activity activity) {
+    //besoin pour refresh la page quand on ferme le popup
+    public FragmentListeTypes fragment;
+    ExpandableListView ela;
+
+
+    public MenuDeroulantTypes(Context context, List<String> typeListe, Map<String, List<Evenement>> dictionnaire, Activity activity, FragmentListeTypes fragment) {
         this.context = context;
         this.typeListe = typeListe;
         this.dictionnaire = dictionnaire;
         this.activity = activity;
+        this.fragment = fragment;
     }
 
     @Override
@@ -175,6 +184,7 @@ public class MenuDeroulantTypes extends BaseExpandableListAdapter {
         }
         View popupView = layoutInflater.inflate(R.layout.popup_enregisrer_et_modifier_evenements, null);
 
+
         // Créer une popup
         popup = new PopupWindow(popupView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
 
@@ -286,8 +296,22 @@ public class MenuDeroulantTypes extends BaseExpandableListAdapter {
         });
 
         Button bFermer = popupView.findViewById(R.id.boutonPopupFermerEvenement);
+        bFermer.setText("Supprimer");
+        bFermer.setOnClickListener(osef-> {
+            fdb.deleteEvenement(activity, eve.id);
 
-        bFermer.setOnClickListener(osef-> popup.dismiss());
+
+
+            fragment.afficherType();
+
+
+
+
+
+
+
+            popup.dismiss();
+        });
 
 
 

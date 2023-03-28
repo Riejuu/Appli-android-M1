@@ -1,11 +1,16 @@
 package com.example.taskmanagement;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.ViewPager;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -35,6 +40,34 @@ public class MainActivity extends AppCompatActivity {
 
         //dit que de base on est sur la page accueil
         viewPager.setCurrentItem(1);
+
+
+
+
+
+
+
+        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel channel = new NotificationChannel("channel_id", "Nom du canal", NotificationManager.IMPORTANCE_DEFAULT);
+            notificationManager.createNotificationChannel(channel);
+        }
+
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "channel_id")
+                .setSmallIcon(R.drawable.tache_pas_faite)
+                .setContentTitle("Titre de la notification")
+                .setContentText("Contenu de la notification");
+
+
+
+        notificationManager.notify(1, builder.build());
+
+
+
+
+
     }
 
     private void setupViewPager() {

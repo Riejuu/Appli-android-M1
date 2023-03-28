@@ -101,7 +101,7 @@ public class FragmentListeTypes extends Fragment {
         }
 
         //dans la classe MenuDeroulantType, il va s'occuper d'afficher les view parents et enfants
-        MenuDeroulantTypes adapter = new MenuDeroulantTypes(getActivity(), typeListe, dictionnaire, getActivity());
+        MenuDeroulantTypes adapter = new MenuDeroulantTypes(getActivity(), typeListe, dictionnaire, getActivity(), this);
         expListView.setAdapter(adapter);
 
 
