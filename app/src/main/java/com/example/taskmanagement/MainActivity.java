@@ -51,16 +51,12 @@ public class MainActivity extends AppCompatActivity {
         pagerAdapter.addFragment(new FragmentAccueil());
         pagerAdapter.addFragment(new FragmentCalendrier());
         pagerAdapter.addFragment(new FragmentListeEvenements());
-
-
         viewPager.setAdapter(pagerAdapter);
-
-
     }
 
     private void setupBottomNavigation() {
         bottomNavigationView = findViewById(R.id.barreDesTaches);
-
+        
         // set la barre de navigation pour etre lié a la nav barre
         bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
             switch (item.getItemId()) {

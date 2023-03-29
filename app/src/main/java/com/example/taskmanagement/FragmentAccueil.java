@@ -259,7 +259,7 @@ public class FragmentAccueil extends Fragment {
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(getActivity(), "channel_id")
                 .setSmallIcon(R.drawable.tache_pas_faite)
-                .setContentTitle("Titre de la notification")
+                .setContentTitle("Evenements")
                 .setContentText(cpt + " évenement(s) aujourd'hui");
 
         notificationManager.notify(1, builder.build());

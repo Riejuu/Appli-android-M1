@@ -41,6 +41,8 @@ public class FragmentCalendrier extends Fragment {
         //quand on selectionne une case du calendrier recupère ou on est et
         calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
 
+
+
             @Override
             public void onSelectedDayChange(CalendarView view, int year, int month, int dayOfMonth) {
 
@@ -51,14 +53,10 @@ public class FragmentCalendrier extends Fragment {
                 //les mois commencent a 0
                 for(Evenement eve : fdb.showDaysEvent(getActivity(), year, month+1, dayOfMonth))
                     afficherEvenementCalendrier(eve);
-
-
-
             }
 
-
-
         });
+
 
 
 
