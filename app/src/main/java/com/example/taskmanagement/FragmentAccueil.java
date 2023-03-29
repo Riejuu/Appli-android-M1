@@ -1,14 +1,19 @@
 package com.example.taskmanagement;
 
 import android.app.Activity;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.content.Context;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.NotificationCompat;
 import androidx.fragment.app.Fragment;
 
 import android.util.DisplayMetrics;
@@ -31,6 +36,7 @@ import org.eazegraph.lib.models.PieModel;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 
 public class FragmentAccueil extends Fragment {
@@ -48,6 +54,7 @@ public class FragmentAccueil extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        notifConnexion();   //notif de création d'appli
     }
 
 
@@ -225,10 +232,43 @@ public class FragmentAccueil extends Fragment {
 
 
 
+    public void notifConnexion(){
+
+
+        Calendar calendar = Calendar.getInstance();
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH) + 1; // Notez que le mois commence à 0
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        int cpt = 0;
+
+
+        for(Evenement eve : fdb.getAllEvenement(getActivity())){
+            if(eve.jour == day && eve.mois == month && eve.annee == year)
+                cpt++;
+        }
+
+
+
+        NotificationManager notificationManager = (NotificationManager) getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
+
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel channel = new NotificationChannel("channel_id", "Nom du canal", NotificationManager.IMPORTANCE_DEFAULT);
+            notificationManager.createNotificationChannel(channel);
+        }
+
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(getActivity(), "channel_id")
+                .setSmallIcon(R.drawable.tache_pas_faite)
+                .setContentTitle("Titre de la notification")
+                .setContentText(cpt + " évenement(s) aujourd'hui");
+
+        notificationManager.notify(1, builder.build());
 
 
 
 
+
+    }
 
 
 
