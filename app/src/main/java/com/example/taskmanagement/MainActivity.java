@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void setupBottomNavigation() {
         bottomNavigationView = findViewById(R.id.barreDesTaches);
-        
+
         // set la barre de navigation pour etre lié a la nav barre
         bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
             switch (item.getItemId()) {

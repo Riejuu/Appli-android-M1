@@ -56,7 +56,7 @@ public class MenuDeroulantTypes extends BaseExpandableListAdapter {
     private LayoutInflater layoutInflater;
     private PopupWindow popup;
 
-    //besoin pour refresh la page quand on ferme le popup
+    //besoin pour refresh la page quand on ferme le popup-
     public FragmentListeTypes fragment;
     ExpandableListView ela;
 

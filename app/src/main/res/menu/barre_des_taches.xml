@@ -6,11 +6,11 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/barreTacheImage1"
-        android:icon="@drawable/parametres"
+        android:icon="@drawable/types"
         android:title="Types" />
     <item
         android:id="@+id/barreTacheImage2"
-        android:icon="@drawable/parametres"
+        android:icon="@drawable/accueil"
         android:title="Accueil" />
     <item
         android:id="@+id/barreTacheImage3"
@@ -18,6 +18,6 @@
         android:title="Calendrier" />
     <item
         android:id="@+id/barreTacheImage4"
-        android:icon="@drawable/parametres"
+        android:icon="@drawable/image_evenements"
         android:title="Evenements" />
 </menu>
