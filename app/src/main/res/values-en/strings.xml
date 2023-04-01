@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">taskManagement</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="type">Type :</string>
+    <string name="couleur">Color :</string>
+    <string name="typeDeTaches">Define the type of task</string>
+    <string name="enregistrer">Register</string>
+    <string name="fermer">Close</string>
+
+
+    <string name="nomTache">Name :</string>
+    <string name="evenementDate">Date :</string>
+    <string name="typeDeEvenement">Define the type of event</string>
+</resources>
