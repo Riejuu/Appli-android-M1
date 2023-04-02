@@ -4,13 +4,13 @@
     <string name="type">Type :</string>
     <string name="couleur">Color :</string>
     <string name="typeDeTaches">Define the type of task</string>
-    <string name="enregistrer">Register</string>
+    <string name="enregistrer">Save</string>
     <string name="fermer">Close</string>
 
 
     <string name="nomTache">Name :</string>
     <string name="evenementDate">Date :</string>
-    <string name="typeDeEvenement">Define the type of event</string>
+    <string name="typeDeEvenement">Event's type</string>
 
     <string name="Types">Types</string>
     <string name="Accueil">Home</string>
@@ -18,5 +18,5 @@
     <string name="Evenements">Events</string>
 
     <string name="EvenementsNotif">Events</string>
-    <string name="EvenementsNotifAujourdhui">Event(s) today</string>
+    <string name="EvenementsNotifAujourdhui">Today's events</string>
 </resources>
