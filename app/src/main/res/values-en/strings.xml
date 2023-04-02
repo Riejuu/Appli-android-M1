@@ -11,4 +11,12 @@
     <string name="nomTache">Name :</string>
     <string name="evenementDate">Date :</string>
     <string name="typeDeEvenement">Define the type of event</string>
+
+    <string name="Types">Types</string>
+    <string name="Accueil">Home</string>
+    <string name="Calendrier">Calendar</string>
+    <string name="Evenements">Events</string>
+
+    <string name="EvenementsNotif">Events</string>
+    <string name="EvenementsNotifAujourdhui">Event(s) today</string>
 </resources>

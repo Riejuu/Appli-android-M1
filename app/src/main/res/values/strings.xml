@@ -12,4 +12,12 @@
     <string name="evenementDate">Date :</string>
     <string name="typeDeEvenement">Definissez le type d\'evenement</string>
 
+    <string name="Types">Types</string>
+    <string name="Accueil">Accueil</string>
+    <string name="Calendrier">Calendrier</string>
+    <string name="Evenements">Evenements</string>
+
+    <string name="EvenementsNotif">Evenements</string>
+    <string name="EvenementsNotifAujourdhui">évènement(s) aujourd\'hui</string>
+
 </resources>
